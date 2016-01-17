@@ -80,8 +80,66 @@ void BatchassUnionJackApp::setup()
 
 	mSrcArea = Area(0, 0, FBO_WIDTH, FBO_HEIGHT);
 	Warp::setSize(mWarps, mFbo->getSize());
-}
+	// lines
+	try {
+		mTexture = gl::Texture::create(loadImage(loadAsset("mandala1.png")));
+		mTexture->bind(0);
+	}
+	catch (...) {
+		console() << "unable to load the texture file!" << std::endl;
+	}
+	mTexture->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
 
+	try {
+		mShader = ci::gl::GlslProg::create(
+			ci::app::loadAsset("vert.glsl"),
+			ci::app::loadAsset("frag.glsl")
+			);
+	}
+	catch (gl::GlslProgCompileExc &exc) {
+		console() << "Shader compile error: " << std::endl;
+		console() << exc.what();
+	}
+	catch (...) {
+		console() << "Unable to load shader" << std::endl;
+	}
+	mShowHud = true;
+
+	buildMeshes();
+}
+void BatchassUnionJackApp::buildMeshes()
+{
+	vector<vec3> lineCoords;
+	vector<vec3> maskCoords;
+
+	for (unsigned int z = 0; z < mLines; ++z) {
+		for (unsigned int x = 0; x < mPoints; ++x) {
+			vec3 vert = vec3(x / (float)mPoints, 1, z / (float)mLines);
+
+			lineCoords.push_back(vert);
+
+			// To speed up the vertex shader it only does the texture lookup
+			// for vertexes with y values greater than 0. This way we can build
+			// a strip: 1 1 1  that will become: 2 9 3
+			//          |\|\|                    |\|\|
+			//          0 0 0                    0 0 0
+			maskCoords.push_back(vert);
+			vert.y = 0.0;
+			maskCoords.push_back(vert);
+		}
+	}
+	gl::VboMeshRef lineMesh = gl::VboMesh::create(lineCoords.size(), GL_LINE_STRIP, {
+		gl::VboMesh::Layout().usage(GL_STATIC_DRAW).attrib(geom::Attrib::POSITION, 3),
+	});
+	lineMesh->bufferAttrib(geom::Attrib::POSITION, lineCoords);
+	mLineBatch = gl::Batch::create(lineMesh, mShader);
+
+	gl::VboMeshRef maskMesh = gl::VboMesh::create(maskCoords.size(), GL_TRIANGLE_STRIP, {
+		gl::VboMesh::Layout().usage(GL_STATIC_DRAW).attrib(geom::Attrib::POSITION, 3),
+	});
+	maskMesh->bufferAttrib(geom::Attrib::POSITION, maskCoords);
+	mMaskBatch = gl::Batch::create(maskMesh, mShader);
+}
 void BatchassUnionJackApp::cleanup()
 {
 	// save warp settings
@@ -94,6 +152,17 @@ void BatchassUnionJackApp::update()
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
 	mVDRouter->update();
 	updateWindowTitle();
+	//float scale = math<float>::clamp(mShip.mPos.z, 0.2, 1.0);
+	float scale = 1.0f;
+	mTextureMatrix = glm::translate(vec3(0.5, 0.5, 0));
+	mTextureMatrix = glm::rotate(mTextureMatrix, mVDSettings->liveMeter, vec3(0, 0, 1));
+	mTextureMatrix = glm::scale(mTextureMatrix, vec3(scale, scale, 0.25));
+	//mTextureMatrix = glm::translate(mTextureMatrix, vec3(mVDSettings->liveMeter, mVDSettings->iBeat, 0));
+	mTextureMatrix = glm::translate(mTextureMatrix, vec3(-0.5, -0.5, 0));
+
+	mCamera.setPerspective(40.0f, 1.0f, 0.5f, 3.0f);
+	mCamera.lookAt(vec3(0.0f, 1.5f , 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
+
 	// render into our FBO
 	renderSceneToFbo();
 }
@@ -117,45 +186,72 @@ void BatchassUnionJackApp::renderSceneToFbo()
 	case 159:
 	case 160:
 	case 176:
-		gl::clear(Color(1.0, 1.0f, 1.0f));
+		gl::clear(Color(1.0, 1.0f, 1.0f), true);
 		break;
 
 	default:
-		gl::clear(Color(0.2, 0.0f, 0.5f));
+		gl::clear(mBlack, true);
 		break;
 	}
 
 	// setup the viewport to match the dimensions of the FBO
 	gl::ScopedViewport scpVp(ivec2(0), mFbo->getSize());
 
-	if (mHorizontalAnimation) {
-		str = "BATCHASS    BATCHASS    BATCHASS";// loops on 12
-		int sz = int(getElapsedFrames() / 20.0) % 13;
-		shift_left(0, sz);
-	}
-	else {
-		for (size_t i = 0; i < strSize; i++)
-		{
-			if (mIndexes[i]) {
-				str[i] = Rand::randInt(65, 100);
-			}
-			else {
-				str[i] = targetStr[i];
+	if (mShowHud) {
+		if (mHorizontalAnimation) {
+			str = "BATCHASS    BATCHASS    BATCHASS";// loops on 12
+			int sz = int(getElapsedFrames() / 20.0) % 13;
+			shift_left(0, sz);
+		}
+		else {
+			for (size_t i = 0; i < strSize; i++)
+			{
+				if (mIndexes[i]) {
+					str[i] = Rand::randInt(65, 100);
+				}
+				else {
+					str[i] = targetStr[i];
+				}
 			}
 		}
-	}
 
-	if (mVDSettings->iBeat > 0 && mVDSettings->iBeat / 8 < strSize) mIndexes[mVDSettings->iBeat / 8] = false;
-	if (mVDSettings->iBeat > 63) mHorizontalAnimation = true;
-	mDisplays[0].display(str);
-	mDisplays[1]
-		.display("Beat " + toString(mVDSettings->iBeat))
-		.colors(ColorA(mVDSettings->iFps < 50 ? mRed : mBlue, 0.8), ColorA(mDarkBlue, 0.8));
-	/*mDisplays[0].draw();*/
-	for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
-		display->draw();
+		if (mVDSettings->iBeat > 0 && mVDSettings->iBeat / 8 < strSize) mIndexes[mVDSettings->iBeat / 8] = false;
+		if (mVDSettings->iBeat > 63) mHorizontalAnimation = true;
+		if (mVDSettings->iBeat > 176) mShowHud = false;
+		mDisplays[0].display(str);
+		mDisplays[1]
+			.display("Beat " + toString(mVDSettings->iBeat))
+			.colors(ColorA(mVDSettings->iFps < 50 ? mRed : mBlue, 0.8), ColorA(mDarkBlue, 0.8));
+		mDisplays[0].draw();
+		/*for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
+			display->draw();
+			}*/
+		gl::color(Color::white());
 	}
-	gl::color(Color::white());
+	else {
+		gl::ScopedMatrices matrixScope;
+		gl::setMatrices(mCamera);
+
+		gl::ScopedDepth depthScope(true);
+
+		mShader->uniform("textureMatrix", mTextureMatrix);
+
+		// Center the model
+		gl::translate(-0.5, 0.0, -0.5);
+
+		unsigned int indiciesInLine = mPoints;
+		unsigned int indiciesInMask = mPoints * 2;
+		// Draw front to back to take advantage of the depth buffer.
+		for (int i = mLines - 1; i >= 0; --i) {
+			gl::color(mBlack);
+			// Draw masks with alternating colors for debugging
+			// gl::color( Color::gray( i % 2 == 1 ? 0.5 : 0.25) );
+			mMaskBatch->draw(i * indiciesInMask, indiciesInMask);
+
+			gl::color(mBlue);
+			mLineBatch->draw(i * indiciesInLine, indiciesInLine);
+		}
+	}
 }
 void BatchassUnionJackApp::shift_left(std::size_t offset, std::size_t X)
 {
@@ -248,7 +344,7 @@ void BatchassUnionJackApp::keyUp(KeyEvent event)
 
 void BatchassUnionJackApp::updateWindowTitle()
 {
-	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) Batchass");
+	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) " + toString(mVDSettings->iBeat) + " Batchass");
 }
 
 CINDER_APP(BatchassUnionJackApp, RendererGl(RendererGl::Options().msaa(8)), &BatchassUnionJackApp::prepare)

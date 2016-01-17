@@ -97,5 +97,17 @@ private:
 	void						renderSceneToFbo();
 	gl::FboRef					mFbo;
 	static const int			FBO_WIDTH = 640, FBO_HEIGHT = 480;
+	// lines
+	void						buildMeshes();
+	unsigned int				mPoints = 50;
+	unsigned int				mLines = 50;
+	bool						mShowHud;
+	gl::BatchRef				mLineBatch;
+	gl::BatchRef				mMaskBatch;
+
+	gl::TextureRef				mTexture;
+	gl::GlslProgRef				mShader;
+	CameraPersp					mCamera;
+	mat4						mTextureMatrix;
 
 };
