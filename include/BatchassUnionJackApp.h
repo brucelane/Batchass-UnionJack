@@ -24,6 +24,7 @@ along with Cinder-Warping.  If not, see <http://www.gnu.org/licenses/>.
 #include "cinder/gl/Texture.h"
 #include "cinder/ImageIo.h"
 #include "cinder/Rand.h"
+#include "cinder/gl/Fbo.h"
 
 // warping
 #include "Warp.h"
@@ -88,4 +89,9 @@ private:
 	// track 
 	float						bpm;
 	float						fpb;
+	// fbo
+	void						renderSceneToFbo();
+	gl::FboRef					mFbo;
+	static const int			FBO_WIDTH = 640, FBO_HEIGHT = 480;
+
 };

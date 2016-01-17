@@ -2,39 +2,39 @@
 <warpconfig version="1.0" profile="default">
 	<profile name="default">
 		<map id="1" display="1">
-			<warp method="perspectivebilinear" width="2" height="2" brightness="1" resolution="16" linear="0" adaptive="1">
+			<warp method="perspectivebilinear" width="2" height="2" brightness="1" resolution="16" linear="0" adaptive="0">
 				<controlpoint x="0" y="0"/>
 				<controlpoint x="0" y="1"/>
 				<controlpoint x="1" y="0"/>
 				<controlpoint x="1" y="1"/>
-				<corner x="0" y="0"/>
-				<corner x="0.268055558" y="0.0721649453"/>
-				<corner x="0.22986111" y="0.746849954"/>
-				<corner x="0.0465277769" y="0.610538363"/>
+				<corner x="0.298611104" y="0.6414662"/>
+				<corner x="0.61944443" y="0.602520049"/>
+				<corner x="0.634722233" y="0.290950745"/>
+				<corner x="0.278472215" y="0.300114542"/>
 			</warp>
 		</map>
 		<map id="2" display="1">
-			<warp method="perspectivebilinear" width="2" height="2" brightness="1" resolution="16" linear="0" adaptive="1">
+			<warp method="perspectivebilinear" width="2" height="2" brightness="1" resolution="16" linear="0" adaptive="0">
 				<controlpoint x="0" y="0"/>
 				<controlpoint x="0" y="1"/>
 				<controlpoint x="1" y="0"/>
 				<controlpoint x="1" y="1"/>
-				<corner x="0.688194454" y="0.240549833"/>
-				<corner x="0.884027779" y="0.206185564"/>
-				<corner x="0.918055534" y="0.434135169"/>
-				<corner x="0.700694442" y="0.500572741"/>
+				<corner x="0.0444444455" y="0.643757164"/>
+				<corner x="0.247222215" y="0.665521204"/>
+				<corner x="0.220833331" y="0.325314999"/>
+				<corner x="0.0465277769" y="0.318442166"/>
 			</warp>
 		</map>
 		<map id="3" display="1">
-			<warp method="perspectivebilinear" width="2" height="2" brightness="1" resolution="16" linear="0" adaptive="1">
+			<warp method="perspectivebilinear" width="2" height="2" brightness="1" resolution="16" linear="0" adaptive="0">
 				<controlpoint x="0" y="0"/>
 				<controlpoint x="0" y="1"/>
 				<controlpoint x="1" y="0"/>
 				<controlpoint x="1" y="1"/>
-				<corner x="0.240972221" y="0.262313873"/>
-				<corner x="0.616666675" y="0.258877426"/>
-				<corner x="0.677777767" y="0.628865957"/>
-				<corner x="0.142361104" y="0.618556678"/>
+				<corner x="0.697916687" y="0.601374567"/>
+				<corner x="0.929861128" y="0.611683846"/>
+				<corner x="0.94305557" y="0.269186705"/>
+				<corner x="0.693750024" y="0.276059568"/>
 			</warp>
 		</map>
 	</profile>

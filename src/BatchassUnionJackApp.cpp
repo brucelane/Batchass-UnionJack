@@ -9,10 +9,10 @@
 
 	fpb = 4, bpm = 142
 	fps = 142 / 60 * 4 = 9.46
-*/
-void BatchassUnionJackApp::prepare( Settings *settings )
+	*/
+void BatchassUnionJackApp::prepare(Settings *settings)
 {
-	settings->setWindowSize( 1440, 900 );
+	settings->setWindowSize(1440, 900);
 }
 
 void BatchassUnionJackApp::setup()
@@ -27,16 +27,39 @@ void BatchassUnionJackApp::setup()
 
 	mUseBeginEnd = false;
 	updateWindowTitle();
-	fpb = 4.0f;
+	fpb = 16.0f;
 	bpm = 142.0f;
 	float fps = bpm / 60.0f * fpb;
 	setFrameRate(fps);
 
+
+
+	int w = mVDUtils->getWindowsResolution();
+	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
+	setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
+	// UnionJack
+	Color light = Color8u::hex(0x42a1eb);
+	Color dark = Color8u::hex(0x082f4d);
+	vec2 padding(200);
+	mDisplays = {
+		// Let's print out the full ASCII table as a font specimen
+		UnionJack(8).display(" !\"#$%&'()*+,-./0123456789:;<=>?").scale(8).colors(light, dark),
+		UnionJack(11).display("FPS").position(padding).colors(Color8u::hex(0xf00000), Color8u::hex(0x530000))
+	};
+	// Position the displays relative to each other.
+	mDisplays[1].below(mDisplays[0]);
+	// fbo
+	gl::Fbo::Format format;
+	//format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
+	mFbo = gl::Fbo::create(FBO_WIDTH, FBO_HEIGHT, format.depthTexture());
+
+	gl::enableDepthRead();
+	gl::enableDepthWrite();
 	// initialize warps
-	mSettings = getAssetPath( "" ) / "warps.xml";
-	if( fs::exists( mSettings ) ) {
+	mSettings = getAssetPath("") / "warps.xml";
+	if (fs::exists(mSettings)) {
 		// load warp settings from file if one exists
-		mWarps = Warp::readSettings( loadFile( mSettings ) );
+		mWarps = Warp::readSettings(loadFile(mSettings));
 	}
 	else {
 		// otherwise create a warp from scratch
@@ -46,160 +69,154 @@ void BatchassUnionJackApp::setup()
 	}
 
 	// load test image
-	try {
-		mImage = gl::Texture::create( loadImage( loadAsset( "help.jpg" ) ), 
-									  gl::Texture2d::Format().loadTopDown().mipmap( true ).minFilter( GL_LINEAR_MIPMAP_LINEAR ) );
+	/*try {
+	mImage = gl::Texture::create(loadImage(loadAsset("help.jpg")),
+	gl::Texture2d::Format().loadTopDown().mipmap(true).minFilter(GL_LINEAR_MIPMAP_LINEAR));
 
-		mSrcArea = mImage->getBounds();
 
-		// adjust the content size of the warps
-		Warp::setSize( mWarps, mImage->getSize() );
+	// adjust the content size of the warps
+	Warp::setSize(mWarps, mImage->getSize());
 	}
-	catch( const std::exception &e ) {
-		console() << e.what() << std::endl;
-	}
-	int w = mVDUtils->getWindowsResolution();
-	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
-	setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
+	catch (const std::exception &e) {
+	console() << e.what() << std::endl;
+	}*/
+
+	mSrcArea = Area(0, 0, FBO_WIDTH, FBO_HEIGHT);
+	Warp::setSize(mWarps, mFbo->getSize());
 }
 
 void BatchassUnionJackApp::cleanup()
 {
 	// save warp settings
-	Warp::writeSettings( mWarps, writeFile( mSettings ) );
+	Warp::writeSettings(mWarps, writeFile(mSettings));
 }
 
 void BatchassUnionJackApp::update()
 {
-	// there is nothing to update
+	mVDSettings->iFps = getAverageFps();
+	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
+	updateWindowTitle();
+	// render into our FBO
+	renderSceneToFbo();
+}
+// Render the scene into the FBO
+void BatchassUnionJackApp::renderSceneToFbo()
+{
+	// this will restore the old framebuffer binding when we leave this function
+	// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
+	// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
+	gl::ScopedFramebuffer fbScp(mFbo);
+	// clear out the FBO with blue
+	gl::clear(Color(0.25, 0.0f, 0.6f));
+
+	// setup the viewport to match the dimensions of the FBO
+	gl::ScopedViewport scpVp(ivec2(0), mFbo->getSize());
+
+	str = "BATCHASS    BATCHASS    BATCHASS";// loops on 12
+	int sz = int(getElapsedFrames() / 20.0) % 13;
+	shift_left(0, sz);
+	mDisplays[0].display(str);
+	mDisplays[1]
+		.display("FPS " + mVDSettings->sFps)
+		.colors(ColorA(mVDSettings->iFps < 50 ? mRed : mBlue, 0.8), ColorA(mDarkBlue, 0.8));
+
+	for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
+		display->draw();
+	}
+	gl::color(Color::white());
 }
 
 void BatchassUnionJackApp::draw()
 {
 	// clear the window and set the drawing color to white
 	gl::clear();
-	gl::color( Color::white() );
+	gl::color(Color::white());
 
-	if( mImage ) {
-		// iterate over the warps and draw their content
-		for( auto &warp : mWarps ) {
-			// there are two ways you can use the warps:
-			if( mUseBeginEnd ) {
-				// a) issue your draw commands between begin() and end() statements
-				warp->begin();
-
-				// in this demo, we want to draw a specific area of our image,
-				// but if you want to draw the whole image, you can simply use: gl::draw( mImage );
-				gl::draw( mImage, mSrcArea, warp->getBounds() );
-
-				warp->end();
-			}
-			else {
-				// b) simply draw a texture on them (ideal for video)
-
-				// in this demo, we want to draw a specific area of our image,
-				// but if you want to draw the whole image, you can simply use: warp->draw( mImage );
-				warp->draw( mImage, mSrcArea );
-			}
-		}
+	// iterate over the warps and draw their content
+	for (auto &warp : mWarps) {
+		warp->draw(mFbo->getColorTexture(), mSrcArea );//mFbo->getBounds()
 	}
-}
 
+
+}
+void BatchassUnionJackApp::shift_left(std::size_t offset, std::size_t X)
+{
+	std::rotate(std::next(str.begin(), offset),
+		std::next(str.begin(), offset + X),
+		str.end());
+	str = str.substr(0, str.size() - X);
+}
 void BatchassUnionJackApp::resize()
 {
 	// tell the warps our window has been resized, so they properly scale up or down
-	Warp::handleResize( mWarps );
+	Warp::handleResize(mWarps);
 }
 
-void BatchassUnionJackApp::mouseMove( MouseEvent event )
+void BatchassUnionJackApp::mouseMove(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseMove( mWarps, event ) ) {
+	if (!Warp::handleMouseMove(mWarps, event)) {
 		// let your application perform its mouseMove handling here
 	}
 }
 
-void BatchassUnionJackApp::mouseDown( MouseEvent event )
+void BatchassUnionJackApp::mouseDown(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseDown( mWarps, event ) ) {
+	if (!Warp::handleMouseDown(mWarps, event)) {
 		// let your application perform its mouseDown handling here
 	}
 }
 
-void BatchassUnionJackApp::mouseDrag( MouseEvent event )
+void BatchassUnionJackApp::mouseDrag(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseDrag( mWarps, event ) ) {
+	if (!Warp::handleMouseDrag(mWarps, event)) {
 		// let your application perform its mouseDrag handling here
 	}
 }
 
-void BatchassUnionJackApp::mouseUp( MouseEvent event )
+void BatchassUnionJackApp::mouseUp(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseUp( mWarps, event ) ) {
+	if (!Warp::handleMouseUp(mWarps, event)) {
 		// let your application perform its mouseUp handling here
 	}
 }
 
-void BatchassUnionJackApp::keyDown( KeyEvent event )
+void BatchassUnionJackApp::keyDown(KeyEvent event)
 {
 	// pass this key event to the warp editor first
-	if( !Warp::handleKeyDown( mWarps, event ) ) {
+	if (!Warp::handleKeyDown(mWarps, event)) {
 		// warp editor did not handle the key, so handle it here
-		switch( event.getCode() ) {
-			case KeyEvent::KEY_ESCAPE:
-				// quit the application
-				quit();
-				break;
-			case KeyEvent::KEY_f:
-				// toggle full screen
-				setFullScreen( !isFullScreen() );
-				break;
-			case KeyEvent::KEY_v:
-				// toggle vertical sync
-				gl::enableVerticalSync( !gl::isVerticalSyncEnabled() );
-				break;
-			case KeyEvent::KEY_w:
-				// toggle warp edit mode
-				Warp::enableEditMode( !Warp::isEditModeEnabled() );
-				break;
-			case KeyEvent::KEY_a:
-				// toggle drawing a random region of the image
-				if( mSrcArea.getWidth() != mImage->getWidth() || mSrcArea.getHeight() != mImage->getHeight() )
-					mSrcArea = mImage->getBounds();
-				else {
-					int x1 = Rand::randInt( 0, mImage->getWidth() - 150 );
-					int y1 = Rand::randInt( 0, mImage->getHeight() - 150 );
-					int x2 = Rand::randInt( x1 + 150, mImage->getWidth() );
-					int y2 = Rand::randInt( y1 + 150, mImage->getHeight() );
-					mSrcArea = Area( x1, y1, x2, y2 );
-				}
-				break;
-			case KeyEvent::KEY_SPACE:
-				// toggle drawing mode
-				mUseBeginEnd = !mUseBeginEnd;
-				updateWindowTitle();
-				break;
+		switch (event.getCode()) {
+		case KeyEvent::KEY_ESCAPE:
+			// quit the application
+			quit();
+			break;
+		case KeyEvent::KEY_v:
+			// toggle vertical sync
+			gl::enableVerticalSync(!gl::isVerticalSyncEnabled());
+			break;
+		case KeyEvent::KEY_w:
+			// toggle warp edit mode
+			Warp::enableEditMode(!Warp::isEditModeEnabled());
+			break;
 		}
 	}
 }
 
-void BatchassUnionJackApp::keyUp( KeyEvent event )
+void BatchassUnionJackApp::keyUp(KeyEvent event)
 {
 	// pass this key event to the warp editor first
-	if( !Warp::handleKeyUp( mWarps, event ) ) {
+	if (!Warp::handleKeyUp(mWarps, event)) {
 		// let your application perform its keyUp handling here
 	}
 }
 
 void BatchassUnionJackApp::updateWindowTitle()
 {
-	if( mUseBeginEnd )
-		getWindow()->setTitle( "Warping Sample - Using begin() and end()" );
-	else
-		getWindow()->setTitle( "Warping Sample - Using draw()" );
+	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) Batchass");
 }
 
-CINDER_APP( BatchassUnionJackApp, RendererGl( RendererGl::Options().msaa( 8 ) ), &BatchassUnionJackApp::prepare )
+CINDER_APP(BatchassUnionJackApp, RendererGl(RendererGl::Options().msaa(8)), &BatchassUnionJackApp::prepare)
