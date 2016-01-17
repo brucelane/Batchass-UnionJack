@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Blocks">
+      <UniqueIdentifier>{AB93BE75-2497-4F61-AB9A-EB13027CC695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Midi2">
+      <UniqueIdentifier>{B2EB81A7-0BD7-4CB1-89B9-050E1E38EF38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Midi2\include">
+      <UniqueIdentifier>{F269D89B-E8D3-4806-B78F-1E6E6F68A05A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Midi2\lib">
+      <UniqueIdentifier>{8B10F36B-E610-4481-AD18-65BAB97BFF62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Midi2\src">
+      <UniqueIdentifier>{942C7ABD-662D-4F3E-BFA5-E11AAACA3360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Videodromm">
+      <UniqueIdentifier>{B4463211-D7D2-441B-80E1-BE66CC961A60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Videodromm\include">
+      <UniqueIdentifier>{81A9C202-823E-4DD1-9334-2A050E4BAB9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Videodromm\src">
+      <UniqueIdentifier>{F06C9AA7-1707-4E27-AEB8-BBCFC517CB50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Warping">
+      <UniqueIdentifier>{DCD10C33-27E1-4C8D-A3DA-BC1E7374DFC3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Warping\include">
+      <UniqueIdentifier>{32480570-1C9C-4B50-8E0E-317A06944B95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Warping\src">
+      <UniqueIdentifier>{A8B8360D-DAAF-446B-BAF1-DE54168FAEB1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-WebSocketPP">
+      <UniqueIdentifier>{2FE08F64-4BA2-400C-95D7-BD800DFB9858}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-WebSocketPP\src">
+      <UniqueIdentifier>{DFED2AF8-F27B-4F90-A129-52C9E0C9D001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC">
+      <UniqueIdentifier>{61308834-0F78-4A7C-9690-E34C29606AB9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC\src">
+      <UniqueIdentifier>{8FCEF498-6CBF-4EC6-96F3-AB1A40194B92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC\src\ip">
+      <UniqueIdentifier>{35733179-4EF7-48CB-855F-000240CD9BAE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC\src\osc">
+      <UniqueIdentifier>{4FCB7D4F-D2A1-40C1-9BD8-7E65AAB60B3F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC\src\ip\win32">
+      <UniqueIdentifier>{1692F2E1-7244-4075-BA3B-2FFEED86A057}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\UnionJack">
+      <UniqueIdentifier>{26151C60-04EC-407C-BC41-988C1195A713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\UnionJack\include">
+      <UniqueIdentifier>{3470DC76-705E-4040-9A5F-E9BB4FDA1D41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\UnionJack\src">
+      <UniqueIdentifier>{B3DD7865-172B-4E36-9CB4-A956ECE99229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{08b56112-63ea-43da-a873-2afe8f638464}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\BatchassUnionJackApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClInclude Include="..\include\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClCompile Include="..\src\BatchassUnionJackApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\CinderMidi.h">
+      <Filter>Blocks\Midi2\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\MidiExceptions.h">
+      <Filter>Blocks\Midi2\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\MidiHub.h">
+      <Filter>Blocks\Midi2\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\MidiOut.h">
+      <Filter>Blocks\Midi2\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\lib\RtMidi.h">
+      <Filter>Blocks\Midi2\lib</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\lib\RtMidi.cpp">
+      <Filter>Blocks\Midi2\lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\src\MidiHub.cpp">
+      <Filter>Blocks\Midi2\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\src\CinderMidi.cpp">
+      <Filter>Blocks\Midi2\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\src\MidiOut.cpp">
+      <Filter>Blocks\Midi2\src</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDLog.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDRouter.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDSettings.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDUtils.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDLog.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDRouter.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDSettings.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDUtils.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Warping\include\Warp.h">
+      <Filter>Blocks\Cinder-Warping\include</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Warping\src\Warp.cpp">
+      <Filter>Blocks\Cinder-Warping\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Warping\src\WarpBilinear.cpp">
+      <Filter>Blocks\Cinder-Warping\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Warping\src\WarpPerspective.cpp">
+      <Filter>Blocks\Cinder-Warping\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Warping\src\WarpPerspectiveBilinear.cpp">
+      <Filter>Blocks\Cinder-Warping\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketClient.cpp">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketConnection.cpp">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketServer.cpp">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketClient.h">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketConnection.h">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketServer.h">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.cpp">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscListener.cpp">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscMessage.cpp">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscSender.cpp">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\IpEndpointName.cpp">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscOutboundPacketStream.cpp">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPrintReceivedElements.cpp">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.cpp">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.cpp">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscArg.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscListener.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscMessage.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscSender.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\IpEndpointName.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\NetworkingUtils.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\PacketListener.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\TimerListener.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\UdpSocket.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\MessageMappingOscPacketListener.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscException.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscHostEndianness.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscOutboundPacketStream.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPacketListener.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPrintReceivedElements.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\NetworkingUtils.cpp">
+      <Filter>Blocks\OSC\src\ip\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\UdpSocket.cpp">
+      <Filter>Blocks\OSC\src\ip\win32</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\UnionJack\include\UnionJack.h">
+      <Filter>Blocks\UnionJack\include</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\UnionJack\src\UnionJack.cpp">
+      <Filter>Blocks\UnionJack\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BatchassUnionJackApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\assets\warps.xml">
+      <Filter>assets</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>
