@@ -79,6 +79,9 @@
     <Filter Include="assets">
       <UniqueIdentifier>{08b56112-63ea-43da-a873-2afe8f638464}</UniqueIdentifier>
     </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{7f1097d1-7c97-431c-ba9e-21f8727eba33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\BatchassUnionJackApp.cpp">
@@ -284,6 +287,9 @@
   <ItemGroup>
     <Xml Include="..\assets\warps.xml">
       <Filter>assets</Filter>
+    </Xml>
+    <Xml Include="Debug\VDSettings.xml">
+      <Filter>debug</Filter>
     </Xml>
   </ItemGroup>
 </Project>

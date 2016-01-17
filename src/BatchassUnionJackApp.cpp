@@ -43,7 +43,7 @@ void BatchassUnionJackApp::setup()
 	vec2 padding(200);
 	mDisplays = {
 		// Let's print out the full ASCII table as a font specimen
-		UnionJack(8).display(" !\"#$%&'()*+,-./0123456789:;<=>?").scale(8).colors(light, dark),
+		UnionJack(8).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(180,320)).scale(8).colors(light, dark),
 		UnionJack(11).display("FPS").position(padding).colors(Color8u::hex(0xf00000), Color8u::hex(0x530000))
 	};
 	// Position the displays relative to each other.
