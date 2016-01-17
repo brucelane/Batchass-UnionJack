@@ -117,6 +117,7 @@
   <ItemGroup>
     <Xml Include="..\assets\warps.xml" />
     <Xml Include="Debug\VDSettings.xml" />
+    <Xml Include="Release\VDSettings.xml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

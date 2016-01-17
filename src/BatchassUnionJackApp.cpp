@@ -54,7 +54,7 @@ void BatchassUnionJackApp::setup()
 	mDisplays = {
 		// Let's print out the full ASCII table as a font specimen
 		UnionJack(strSize).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(180, 320)).scale(8).colors(light, dark),
-		UnionJack(11).display("FPS").position(padding).colors(Color8u::hex(0xf00000), Color8u::hex(0x530000))
+		UnionJack(strSize).display("FPS").position(padding).scale(8).colors(Color8u::hex(0xf00000), Color8u::hex(0x530000))
 	};
 	// Position the displays relative to each other.
 	mDisplays[1].below(mDisplays[0]);
@@ -92,6 +92,7 @@ void BatchassUnionJackApp::update()
 {
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
+	mVDRouter->update();
 	updateWindowTitle();
 	// render into our FBO
 	renderSceneToFbo();
@@ -103,17 +104,34 @@ void BatchassUnionJackApp::renderSceneToFbo()
 	// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
 	// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
 	gl::ScopedFramebuffer fbScp(mFbo);
-	// clear out the FBO with blue
-	gl::clear(Color(0.2, 0.0f, 0.5f));
+	// clear out the FBO with purple
+	switch (mVDSettings->iBeat)
+	{
+	case 80:
+	case 95:
+	case 96:
+	case 112:
+	case 127:
+	case 128:
+	case 144:
+	case 159:
+	case 160:
+	case 176:
+		gl::clear(Color(1.0, 1.0f, 1.0f));
+		break;
+
+	default:
+		gl::clear(Color(0.2, 0.0f, 0.5f));
+		break;
+	}
 
 	// setup the viewport to match the dimensions of the FBO
 	gl::ScopedViewport scpVp(ivec2(0), mFbo->getSize());
 
 	if (mHorizontalAnimation) {
-		//str = "BATCHASS    BATCHASS    BATCHASS";// loops on 12
-		int sz = int(getElapsedFrames() / 20.0) % 9;
+		str = "BATCHASS    BATCHASS    BATCHASS";// loops on 12
+		int sz = int(getElapsedFrames() / 20.0) % 13;
 		shift_left(0, sz);
-
 	}
 	else {
 		for (size_t i = 0; i < strSize; i++)
@@ -126,15 +144,17 @@ void BatchassUnionJackApp::renderSceneToFbo()
 			}
 		}
 	}
-	mIndexes[int(getElapsedSeconds())] = false;
+
+	if (mVDSettings->iBeat > 0 && mVDSettings->iBeat / 8 < strSize) mIndexes[mVDSettings->iBeat / 8] = false;
+	if (mVDSettings->iBeat > 63) mHorizontalAnimation = true;
 	mDisplays[0].display(str);
 	mDisplays[1]
-		.display("FPS " + mVDSettings->sFps)
+		.display("Beat " + toString(mVDSettings->iBeat))
 		.colors(ColorA(mVDSettings->iFps < 50 ? mRed : mBlue, 0.8), ColorA(mDarkBlue, 0.8));
-	mDisplays[0].draw();
-	/*for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
+	/*mDisplays[0].draw();*/
+	for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
 		display->draw();
-		}*/
+	}
 	gl::color(Color::white());
 }
 void BatchassUnionJackApp::shift_left(std::size_t offset, std::size_t X)

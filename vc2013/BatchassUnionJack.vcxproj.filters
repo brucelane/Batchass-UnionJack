@@ -82,6 +82,9 @@
     <Filter Include="debug">
       <UniqueIdentifier>{7f1097d1-7c97-431c-ba9e-21f8727eba33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="release">
+      <UniqueIdentifier>{9c9aa858-d776-475b-9225-075b343b813d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\BatchassUnionJackApp.cpp">
@@ -290,6 +293,9 @@
     </Xml>
     <Xml Include="Debug\VDSettings.xml">
       <Filter>debug</Filter>
+    </Xml>
+    <Xml Include="Release\VDSettings.xml">
+      <Filter>release</Filter>
     </Xml>
   </ItemGroup>
 </Project>
