@@ -81,11 +81,15 @@ private:
 	// UnionJack
 	vector<UnionJack>			mDisplays;
 	std::string					str;
+	std::string					targetStr;
+	int							strSize;
 	void						shift_left(std::size_t offset, std::size_t X);
 	Color						mBlack = Color::black();
 	Color						mBlue = Color8u(66, 161, 235);
 	Color						mDarkBlue = Color8u::hex(0x1A3E5A);
 	Color						mRed = Color8u(240, 0, 0);
+	bool						mHorizontalAnimation;
+	map<int, bool>				mIndexes;
 	// track 
 	float						bpm;
 	float						fpb;

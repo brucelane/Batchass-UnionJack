@@ -41,9 +41,19 @@ void BatchassUnionJackApp::setup()
 	Color light = Color8u::hex(0x42a1eb);
 	Color dark = Color8u::hex(0x082f4d);
 	vec2 padding(200);
+	mHorizontalAnimation = false;
+	targetStr = "BATCHASS";
+	strSize = targetStr.size();
+	int c;
+	for (size_t i = 0; i < strSize; i++)
+	{
+		c = Rand::randInt(48, 92);
+		str.push_back(c);
+		mIndexes[i] = true;
+	}
 	mDisplays = {
 		// Let's print out the full ASCII table as a font specimen
-		UnionJack(8).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(180,320)).scale(8).colors(light, dark),
+		UnionJack(strSize).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(180, 320)).scale(8).colors(light, dark),
 		UnionJack(11).display("FPS").position(padding).colors(Color8u::hex(0xf00000), Color8u::hex(0x530000))
 	};
 	// Position the displays relative to each other.
@@ -67,19 +77,6 @@ void BatchassUnionJackApp::setup()
 		mWarps.push_back(WarpPerspectiveBilinear::create());
 		mWarps.push_back(WarpPerspectiveBilinear::create());
 	}
-
-	// load test image
-	/*try {
-	mImage = gl::Texture::create(loadImage(loadAsset("help.jpg")),
-	gl::Texture2d::Format().loadTopDown().mipmap(true).minFilter(GL_LINEAR_MIPMAP_LINEAR));
-
-
-	// adjust the content size of the warps
-	Warp::setSize(mWarps, mImage->getSize());
-	}
-	catch (const std::exception &e) {
-	console() << e.what() << std::endl;
-	}*/
 
 	mSrcArea = Area(0, 0, FBO_WIDTH, FBO_HEIGHT);
 	Warp::setSize(mWarps, mFbo->getSize());
@@ -107,37 +104,38 @@ void BatchassUnionJackApp::renderSceneToFbo()
 	// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
 	gl::ScopedFramebuffer fbScp(mFbo);
 	// clear out the FBO with blue
-	gl::clear(Color(0.25, 0.0f, 0.6f));
+	gl::clear(Color(0.2, 0.0f, 0.5f));
 
 	// setup the viewport to match the dimensions of the FBO
 	gl::ScopedViewport scpVp(ivec2(0), mFbo->getSize());
 
-	str = "BATCHASS    BATCHASS    BATCHASS";// loops on 12
-	int sz = int(getElapsedFrames() / 20.0) % 13;
-	shift_left(0, sz);
+	if (mHorizontalAnimation) {
+		//str = "BATCHASS    BATCHASS    BATCHASS";// loops on 12
+		int sz = int(getElapsedFrames() / 20.0) % 9;
+		shift_left(0, sz);
+
+	}
+	else {
+		for (size_t i = 0; i < strSize; i++)
+		{
+			if (mIndexes[i]) {
+				str[i] = Rand::randInt(65, 100);
+			}
+			else {
+				str[i] = targetStr[i];
+			}
+		}
+	}
+	mIndexes[int(getElapsedSeconds())] = false;
 	mDisplays[0].display(str);
 	mDisplays[1]
 		.display("FPS " + mVDSettings->sFps)
 		.colors(ColorA(mVDSettings->iFps < 50 ? mRed : mBlue, 0.8), ColorA(mDarkBlue, 0.8));
-
-	for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
+	mDisplays[0].draw();
+	/*for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
 		display->draw();
-	}
+		}*/
 	gl::color(Color::white());
-}
-
-void BatchassUnionJackApp::draw()
-{
-	// clear the window and set the drawing color to white
-	gl::clear();
-	gl::color(Color::white());
-
-	// iterate over the warps and draw their content
-	for (auto &warp : mWarps) {
-		warp->draw(mFbo->getColorTexture(), mSrcArea );//mFbo->getBounds()
-	}
-
-
 }
 void BatchassUnionJackApp::shift_left(std::size_t offset, std::size_t X)
 {
@@ -146,6 +144,20 @@ void BatchassUnionJackApp::shift_left(std::size_t offset, std::size_t X)
 		str.end());
 	str = str.substr(0, str.size() - X);
 }
+void BatchassUnionJackApp::draw()
+{
+	// clear the window and set the drawing color to white
+	gl::clear();
+	gl::color(Color::white());
+
+	// iterate over the warps and draw their content
+	for (auto &warp : mWarps) {
+		warp->draw(mFbo->getColorTexture(), mFbo->getBounds());//mSrcArea
+	}
+
+
+}
+
 void BatchassUnionJackApp::resize()
 {
 	// tell the warps our window has been resized, so they properly scale up or down
