@@ -1,5 +1,15 @@
 #include "BatchassUnionJackApp.h"
+/*
+	tempo 142
+	bpm = (60 * fps) / fpb
 
+	where bpm = beats per min
+	fps = frames per second
+	fpb = frames per beat
+
+	fpb = 4, bpm = 142
+	fps = 142 / 60 * 4 = 9.46
+*/
 void BatchassUnionJackApp::prepare( Settings *settings )
 {
 	settings->setWindowSize( 1440, 900 );
@@ -7,9 +17,20 @@ void BatchassUnionJackApp::prepare( Settings *settings )
 
 void BatchassUnionJackApp::setup()
 {
+	mVDSettings = VDSettings::create();
+	mVDSettings->mLiveCode = false;
+	mVDSettings->mRenderThumbs = false;
+	// utils
+	mVDUtils = VDUtils::create(mVDSettings);
+	// Message router
+	mVDRouter = VDRouter::create(mVDSettings);
+
 	mUseBeginEnd = false;
 	updateWindowTitle();
-	disableFrameRate();
+	fpb = 4.0f;
+	bpm = 142.0f;
+	float fps = bpm / 60.0f * fpb;
+	setFrameRate(fps);
 
 	// initialize warps
 	mSettings = getAssetPath( "" ) / "warps.xml";
@@ -26,7 +47,7 @@ void BatchassUnionJackApp::setup()
 
 	// load test image
 	try {
-		mImage = gl::Texture::create( loadImage( loadAsset( "help.png" ) ), 
+		mImage = gl::Texture::create( loadImage( loadAsset( "help.jpg" ) ), 
 									  gl::Texture2d::Format().loadTopDown().mipmap( true ).minFilter( GL_LINEAR_MIPMAP_LINEAR ) );
 
 		mSrcArea = mImage->getBounds();
@@ -37,6 +58,9 @@ void BatchassUnionJackApp::setup()
 	catch( const std::exception &e ) {
 		console() << e.what() << std::endl;
 	}
+	int w = mVDUtils->getWindowsResolution();
+	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
+	setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
 }
 
 void BatchassUnionJackApp::cleanup()

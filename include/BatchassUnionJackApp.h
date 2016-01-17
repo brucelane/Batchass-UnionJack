@@ -25,12 +25,22 @@ along with Cinder-Warping.  If not, see <http://www.gnu.org/licenses/>.
 #include "cinder/ImageIo.h"
 #include "cinder/Rand.h"
 
+// warping
 #include "Warp.h"
+// parameters
+#include "VDSettings.h"
+// Utils
+#include "VDUtils.h"
+// Message router
+#include "VDRouter.h"
+// UnionJack
+#include "UnionJack.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace ph::warping;
 using namespace std;
+using namespace VideoDromm;
 
 class BatchassUnionJackApp : public App {
 public:
@@ -61,4 +71,21 @@ private:
 	WarpList		mWarps;
 
 	Area			mSrcArea;
+	// Settings
+	VDSettingsRef				mVDSettings;
+	// Utils
+	VDUtilsRef					mVDUtils;
+	// Message router
+	VDRouterRef					mVDRouter;
+	// UnionJack
+	vector<UnionJack>			mDisplays;
+	std::string					str;
+	void						shift_left(std::size_t offset, std::size_t X);
+	Color						mBlack = Color::black();
+	Color						mBlue = Color8u(66, 161, 235);
+	Color						mDarkBlue = Color8u::hex(0x1A3E5A);
+	Color						mRed = Color8u(240, 0, 0);
+	// track 
+	float						bpm;
+	float						fpb;
 };
