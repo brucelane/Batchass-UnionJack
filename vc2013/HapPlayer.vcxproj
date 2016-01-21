@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D3EF0A83-0C72-4911-9BB4-D135F9012BFC}</ProjectGuid>
-    <RootNamespace>BatchassUnionJack</RootNamespace>
+    <ProjectGuid>{C98E0FCD-4620-4D1D-9972-834B519A9DC0}</ProjectGuid>
+    <RootNamespace>HapPlayer</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -50,7 +50,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;..\..\..\Cinder\include;..\..\..\Cinder\include\asio;..\..\..\Cinder\blocks\Cinder-MIDI2\include;..\..\..\Cinder\blocks\Cinder-MIDI2\lib;..\..\..\Cinder\blocks\Cinder-MIDI2\src;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\UnionJack\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\..\Cinder\include;..\..\..\Cinder\include\asio;..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-MIDI2\include;..\..\..\Cinder\blocks\Cinder-MIDI2\lib;..\..\..\Cinder\blocks\Cinder-MIDI2\src;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include;..\..\..\Cinder\blocks\UnionJack\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0601;_WINDOWS;NOMINMAX;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -64,7 +64,7 @@
       <AdditionalIncludeDirectories>"..\..\..\Cinder\include";..\include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>cinder-$(PlatformToolset)_d.lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib</AdditionalDependencies>
+      <AdditionalDependencies>cinder-$(PlatformToolset)_d.lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"..\..\..\Cinder\lib\msw\$(PlatformTarget)";..\..\..\Cinder\blocks\Cinder-Videodromm\lib;..\..\..\Cinder\blocks\Cinder-WebSocketPP\lib\msw</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -80,7 +80,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;..\..\..\Cinder\include;..\..\..\Cinder\include\asio;..\..\..\Cinder\blocks\Cinder-MIDI2\include;..\..\..\Cinder\blocks\Cinder-MIDI2\lib;..\..\..\Cinder\blocks\Cinder-MIDI2\src;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\UnionJack\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\..\Cinder\include;..\..\..\Cinder\include\asio;..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-MIDI2\include;..\..\..\Cinder\blocks\Cinder-MIDI2\lib;..\..\..\Cinder\blocks\Cinder-MIDI2\src;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include;..\..\..\Cinder\blocks\UnionJack\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0601;_WINDOWS;NOMINMAX;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader />
@@ -95,7 +95,7 @@
       <AdditionalIncludeDirectories>"..\..\..\Cinder\include";..\include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>cinder-$(PlatformToolset).lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib</AdditionalDependencies>
+      <AdditionalDependencies>cinder-$(PlatformToolset).lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib;..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"..\..\..\Cinder\lib\msw\$(PlatformTarget)";..\..\..\Cinder\blocks\Cinder-Videodromm\lib;..\..\..\Cinder\blocks\Cinder-WebSocketPP\lib\msw</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
@@ -115,14 +115,25 @@
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\assets\frag.glsl" />
+    <None Include="..\assets\vert.glsl" />
+  </ItemGroup>
+  <ItemGroup>
     <Xml Include="..\assets\warps.xml" />
     <Xml Include="Debug\VDSettings.xml" />
     <Xml Include="Release\VDSettings.xml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ClInclude Include="..\include\BatchassUnionJackApp.h" />
+    <ClInclude Include="..\include\HapPlayerApp.h" />
     <ClInclude Include="..\include\Resources.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\include\CinderImGui.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\include\imgui_user.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\include\imgui_user.inl" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imconfig.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui_internal.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\CinderMidi.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\MidiExceptions.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\MidiHub.h" />
@@ -157,7 +168,13 @@
     <ClInclude Include="..\..\..\Cinder\blocks\UnionJack\include\UnionJack.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\BatchassUnionJackApp.cpp" />
+    <ClCompile Include="..\src\HapPlayerApp.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.c" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\src\CinderImGui.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\lib\RtMidi.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\src\MidiHub.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\src\CinderMidi.cpp" />

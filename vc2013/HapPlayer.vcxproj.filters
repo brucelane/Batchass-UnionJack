@@ -14,87 +14,150 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="Blocks">
-      <UniqueIdentifier>{AB93BE75-2497-4F61-AB9A-EB13027CC695}</UniqueIdentifier>
+      <UniqueIdentifier>{F55589B1-F4BE-4A1B-916E-C7534C966863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Hap2">
+      <UniqueIdentifier>{7880693C-0F8D-43ED-9321-7D439202CA28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Hap2\src">
+      <UniqueIdentifier>{AC83CC20-BFD7-46D2-A02F-5CC9E746AE37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui">
+      <UniqueIdentifier>{8C42DCE0-1F05-4437-8377-2F56648FC784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui\include">
+      <UniqueIdentifier>{DE23DC32-29BD-4B72-B85D-AC13AA713651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui\lib">
+      <UniqueIdentifier>{17976D1D-A193-4EAF-87C0-8EB66C42E6EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui\lib\imgui">
+      <UniqueIdentifier>{5E8974B9-85E1-4147-A2C5-0809C690278E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui\src">
+      <UniqueIdentifier>{76D575F9-59B9-490B-A62B-7255EE717F50}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Midi2">
-      <UniqueIdentifier>{B2EB81A7-0BD7-4CB1-89B9-050E1E38EF38}</UniqueIdentifier>
+      <UniqueIdentifier>{7499F606-A942-4E1D-902A-810DEE4BD0A6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Midi2\include">
-      <UniqueIdentifier>{F269D89B-E8D3-4806-B78F-1E6E6F68A05A}</UniqueIdentifier>
+      <UniqueIdentifier>{F140A104-F0E3-45B0-86FE-C74427EF0C1C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Midi2\lib">
-      <UniqueIdentifier>{8B10F36B-E610-4481-AD18-65BAB97BFF62}</UniqueIdentifier>
+      <UniqueIdentifier>{21FC75CB-D959-4559-9709-EB4715E2A9FC}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Midi2\src">
-      <UniqueIdentifier>{942C7ABD-662D-4F3E-BFA5-E11AAACA3360}</UniqueIdentifier>
+      <UniqueIdentifier>{3BEC0A9B-0F1D-4608-BDD2-99C2E8C8DB67}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Videodromm">
-      <UniqueIdentifier>{B4463211-D7D2-441B-80E1-BE66CC961A60}</UniqueIdentifier>
+      <UniqueIdentifier>{13FD7EFB-0D9E-4AC3-B4E5-0B33603B01C2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Videodromm\include">
-      <UniqueIdentifier>{81A9C202-823E-4DD1-9334-2A050E4BAB9B}</UniqueIdentifier>
+      <UniqueIdentifier>{D7B54D0D-85B7-444F-B4A6-948C894120FC}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Videodromm\src">
-      <UniqueIdentifier>{F06C9AA7-1707-4E27-AEB8-BBCFC517CB50}</UniqueIdentifier>
+      <UniqueIdentifier>{BFB22A3C-6C32-44D2-8249-20E911AC2470}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Cinder-Warping">
-      <UniqueIdentifier>{DCD10C33-27E1-4C8D-A3DA-BC1E7374DFC3}</UniqueIdentifier>
+      <UniqueIdentifier>{D0048DA2-42B3-4489-8DDA-9CBE65CA3434}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Cinder-Warping\include">
-      <UniqueIdentifier>{32480570-1C9C-4B50-8E0E-317A06944B95}</UniqueIdentifier>
+      <UniqueIdentifier>{91ECCF47-5444-4549-9E78-803BEEBEF242}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Cinder-Warping\src">
-      <UniqueIdentifier>{A8B8360D-DAAF-446B-BAF1-DE54168FAEB1}</UniqueIdentifier>
+      <UniqueIdentifier>{6CA43633-B755-43F1-9279-6813784EE74B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Cinder-WebSocketPP">
-      <UniqueIdentifier>{2FE08F64-4BA2-400C-95D7-BD800DFB9858}</UniqueIdentifier>
+      <UniqueIdentifier>{5EC734AD-8FBA-4601-9DAC-32BBCC7FDF62}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Cinder-WebSocketPP\src">
-      <UniqueIdentifier>{DFED2AF8-F27B-4F90-A129-52C9E0C9D001}</UniqueIdentifier>
+      <UniqueIdentifier>{22BCD7A7-C9B6-455F-AC84-94EABD153B74}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC">
-      <UniqueIdentifier>{61308834-0F78-4A7C-9690-E34C29606AB9}</UniqueIdentifier>
+      <UniqueIdentifier>{729DD4C3-D719-4BE9-A86D-DB3DBB7FF1F1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC\src">
-      <UniqueIdentifier>{8FCEF498-6CBF-4EC6-96F3-AB1A40194B92}</UniqueIdentifier>
+      <UniqueIdentifier>{7B1A6687-3DD8-41F0-B4D6-1F35F37040E7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC\src\ip">
-      <UniqueIdentifier>{35733179-4EF7-48CB-855F-000240CD9BAE}</UniqueIdentifier>
+      <UniqueIdentifier>{C9DC0283-8224-4DBA-B673-8D017BF94515}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC\src\osc">
-      <UniqueIdentifier>{4FCB7D4F-D2A1-40C1-9BD8-7E65AAB60B3F}</UniqueIdentifier>
+      <UniqueIdentifier>{9D944B6E-6B48-4B9C-8BAB-A549BC635699}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC\src\ip\win32">
-      <UniqueIdentifier>{1692F2E1-7244-4075-BA3B-2FFEED86A057}</UniqueIdentifier>
+      <UniqueIdentifier>{6B6187CF-457F-4F55-804C-2E692086D860}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\UnionJack">
-      <UniqueIdentifier>{26151C60-04EC-407C-BC41-988C1195A713}</UniqueIdentifier>
+      <UniqueIdentifier>{66F0C9A2-71F3-4251-834C-D10B1842036E}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\UnionJack\include">
-      <UniqueIdentifier>{3470DC76-705E-4040-9A5F-E9BB4FDA1D41}</UniqueIdentifier>
+      <UniqueIdentifier>{25318D8B-71DB-4173-96BB-FC4D758876A9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\UnionJack\src">
-      <UniqueIdentifier>{B3DD7865-172B-4E36-9CB4-A956ECE99229}</UniqueIdentifier>
+      <UniqueIdentifier>{16254043-23C6-4E56-A53B-762C00F34EAD}</UniqueIdentifier>
     </Filter>
     <Filter Include="assets">
-      <UniqueIdentifier>{08b56112-63ea-43da-a873-2afe8f638464}</UniqueIdentifier>
+      <UniqueIdentifier>{02f10dab-b05b-4565-a2b9-425d041450aa}</UniqueIdentifier>
     </Filter>
     <Filter Include="debug">
-      <UniqueIdentifier>{7f1097d1-7c97-431c-ba9e-21f8727eba33}</UniqueIdentifier>
+      <UniqueIdentifier>{458ab7ff-ca2e-4d30-8c1d-cc0d74633feb}</UniqueIdentifier>
     </Filter>
     <Filter Include="release">
-      <UniqueIdentifier>{9c9aa858-d776-475b-9225-075b343b813d}</UniqueIdentifier>
+      <UniqueIdentifier>{652b6efd-cd88-4cdd-8b12-af681299882f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\BatchassUnionJackApp.cpp">
+    <ClCompile Include="..\src\HapPlayerApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClInclude Include="..\include\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClCompile Include="..\src\BatchassUnionJackApp.cpp">
+    <ClCompile Include="..\src\HapPlayerApp.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.cpp">
+      <Filter>Blocks\Cinder-Hap2\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.c">
+      <Filter>Blocks\Cinder-Hap2\src</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.h">
+      <Filter>Blocks\Cinder-Hap2\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.h">
+      <Filter>Blocks\Cinder-Hap2\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\include\CinderImGui.h">
+      <Filter>Blocks\ImGui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\include\imgui_user.h">
+      <Filter>Blocks\ImGui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\include\imgui_user.inl">
+      <Filter>Blocks\ImGui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imconfig.h">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui.h">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui_internal.h">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\src\CinderImGui.cpp">
+      <Filter>Blocks\ImGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui.cpp">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui_draw.cpp">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui_demo.cpp">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
     </ClCompile>
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\CinderMidi.h">
       <Filter>Blocks\Midi2\include</Filter>
@@ -278,7 +341,7 @@
     <ClInclude Include="..\include\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\BatchassUnionJackApp.h">
+    <ClInclude Include="..\include\HapPlayerApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -286,6 +349,14 @@
     <ResourceCompile Include="Resources.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\frag.glsl">
+      <Filter>assets</Filter>
+    </None>
+    <None Include="..\assets\vert.glsl">
+      <Filter>assets</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\assets\warps.xml">
