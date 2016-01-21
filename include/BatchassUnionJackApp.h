@@ -36,6 +36,8 @@ along with Cinder-Warping.  If not, see <http://www.gnu.org/licenses/>.
 #include "VDRouter.h"
 // UnionJack
 #include "UnionJack.h"
+// spout
+#include "spout.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -64,11 +66,11 @@ public:
 
 	void updateWindowTitle();
 private:
-	bool			mUseBeginEnd;
+
 
 	fs::path		mSettings;
 
-	gl::TextureRef	mImage;
+	//gl::TextureRef	mImage;
 	WarpList		mWarps;
 
 	Area			mSrcArea;
@@ -109,5 +111,13 @@ private:
 	gl::GlslProgRef				mShader;
 	CameraPersp					mCamera;
 	mat4						mTextureMatrix;
-
+	// -------- SPOUT -------------
+	SpoutSender					spoutsender;            // Create a Spout sender object
+	bool						bInitialized;           // true if a sender initializes OK
+	bool						bMemoryMode;            // tells us if texture share compatible
+	unsigned int				g_Width, g_Height;      // size of the texture being sent out
+	char						SenderName[256];        // sender name 
+	gl::TextureRef				spoutTexture;           // Local Cinder texture used for sharing
+	bool						bDoneOnce;				// only try to initialize once
+	int							nSenders;
 };

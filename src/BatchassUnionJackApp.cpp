@@ -25,7 +25,7 @@ void BatchassUnionJackApp::setup()
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings);
 
-	mUseBeginEnd = false;
+
 	updateWindowTitle();
 	fpb = 16.0f;
 	bpm = 142.0f;
@@ -104,7 +104,25 @@ void BatchassUnionJackApp::setup()
 		console() << "Unable to load shader" << std::endl;
 	}
 	mShowHud = true;
+	g_Width = FBO_WIDTH;
+	g_Height = FBO_HEIGHT;
+	if (!bInitialized) {
+		strcpy_s(SenderName, "Batchass UnionJack Spout Sender"); // we have to set a sender name first
+	}
+	spoutTexture = gl::Texture::create(g_Width, g_Height);
+	// load image
+	//try {
+	//	mImage = gl::Texture::create(loadImage(loadAsset("2.jpg")),
+	//		gl::Texture2d::Format().loadTopDown().mipmap(true).minFilter(GL_LINEAR_MIPMAP_LINEAR));
 
+	//	mSrcArea = mImage->getBounds();
+
+	//	// adjust the content size of the warps
+	//	Warp::setSize(mWarps, mImage->getSize());
+	//}
+	//catch (const std::exception &e) {
+	//	console() << e.what() << std::endl;
+	//}
 	buildMeshes();
 }
 void BatchassUnionJackApp::buildMeshes()
@@ -144,6 +162,7 @@ void BatchassUnionJackApp::cleanup()
 {
 	// save warp settings
 	Warp::writeSettings(mWarps, writeFile(mSettings));
+	spoutsender.ReleaseSender();
 }
 
 void BatchassUnionJackApp::update()
@@ -161,7 +180,8 @@ void BatchassUnionJackApp::update()
 	mTextureMatrix = glm::translate(mTextureMatrix, vec3(-0.5, -0.5, 0));
 
 	mCamera.setPerspective(40.0f, 1.0f, 0.5f, 3.0f);
-	mCamera.lookAt(vec3(0.0f, 1.5f , 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
+	//mCamera.lookAt(vec3(0.0f, 1.5f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
+	mCamera.lookAt(vec3(0.0f, 2.0f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
 
 	// render into our FBO
 	renderSceneToFbo();
@@ -252,6 +272,7 @@ void BatchassUnionJackApp::renderSceneToFbo()
 			mLineBatch->draw(i * indiciesInLine, indiciesInLine);
 		}
 	}
+
 }
 void BatchassUnionJackApp::shift_left(std::size_t offset, std::size_t X)
 {
@@ -265,12 +286,30 @@ void BatchassUnionJackApp::draw()
 	// clear the window and set the drawing color to white
 	gl::clear();
 	gl::color(Color::white());
-
+	int i = 0;
 	// iterate over the warps and draw their content
 	for (auto &warp : mWarps) {
-		warp->draw(mFbo->getColorTexture(), mFbo->getBounds());//mSrcArea
+		if (i == 0) {
+			warp->draw(mFbo->getColorTexture(), mFbo->getBounds());//mSrcArea
+		}
+		else {
+			warp->draw(mTexture, mSrcArea);
+		}
+		i++;
 	}
+	if (bInitialized)
+	{
+		spoutsender.SendTexture(mFbo->getColorTexture()->getId(), mFbo->getColorTexture()->getTarget(), g_Width, g_Height);
+		// Grab the screen (current read buffer) into the local spout texture
+		//spoutTexture->bind();
+		//glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, g_Width, g_Height);
+		//spoutTexture->unbind();
 
+		// Send the texture for all receivers to use
+		// NOTE : if SendTexture is called with a framebuffer object bound, that binding will be lost
+		// and has to be restored afterwards because Spout uses an fbo for intermediate rendering
+		//spoutsender.SendTexture(spoutTexture->getId(), spoutTexture->getTarget(), g_Width, g_Height);
+	}
 
 }
 
