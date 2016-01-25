@@ -55,7 +55,7 @@ void HapPlayerApp::setup()
 	}
 	mDisplays = {
 		// Let's print out the full ASCII table as a font specimen
-		UnionJack(strSize).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(180, 320)).scale(8).colors(light, dark),
+		UnionJack(strSize).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(50, 280)).scale(7).colors(light, dark),
 		UnionJack(strSize).display("FPS").position(padding).scale(8).colors(Color8u::hex(0xf00000), Color8u::hex(0x530000))
 	};
 	// Position the displays relative to each other.
@@ -187,7 +187,7 @@ void HapPlayerApp::update()
 	mCamera.setPerspective(40.0f, 1.0f, 0.5f, 3.0f);
 	//mCamera.lookAt(vec3(0.0f, 1.5f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
 	mCamera.lookAt(vec3(0.0f, 2.0f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
-
+	if (mVDSettings->iBeat == 303) loadMovieFile(getAssetPath("") / "pupilles1024.hap.mov");
 	// render into our FBO
 	renderSceneToFbo();
 }
@@ -198,7 +198,7 @@ void HapPlayerApp::renderSceneToFbo()
 	// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
 	// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
 	gl::ScopedFramebuffer fbScp(mFbo);
-	// clear out the FBO with purple
+	// clear out the FBO with white or black
 	switch (mVDSettings->iBeat)
 	{
 	case 80:
@@ -301,7 +301,7 @@ void HapPlayerApp::draw()
 	// iterate over the warps and draw their content
 	for (auto &warp : mWarps) {
 		if (i == 0) {
-			warp->draw(mFbo->getColorTexture(), mFbo->getBounds());//mSrcArea
+			warp->draw(mFbo->getColorTexture(), mFbo->getBounds());
 		}
 		else {
 			warp->draw(mImage, mSrcArea);
