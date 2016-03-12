@@ -79,15 +79,6 @@
     <Filter Include="Blocks\OSC\src">
       <UniqueIdentifier>{7B1A6687-3DD8-41F0-B4D6-1F35F37040E7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Blocks\OSC\src\ip">
-      <UniqueIdentifier>{C9DC0283-8224-4DBA-B673-8D017BF94515}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Blocks\OSC\src\osc">
-      <UniqueIdentifier>{9D944B6E-6B48-4B9C-8BAB-A549BC635699}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Blocks\OSC\src\ip\win32">
-      <UniqueIdentifier>{6B6187CF-457F-4F55-804C-2E692086D860}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Blocks\UnionJack">
       <UniqueIdentifier>{66F0C9A2-71F3-4251-834C-D10B1842036E}</UniqueIdentifier>
     </Filter>
@@ -243,98 +234,41 @@
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketServer.h">
       <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.cpp">
-      <Filter>Blocks\OSC\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscListener.cpp">
-      <Filter>Blocks\OSC\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscMessage.cpp">
-      <Filter>Blocks\OSC\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscSender.cpp">
-      <Filter>Blocks\OSC\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\IpEndpointName.cpp">
-      <Filter>Blocks\OSC\src\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscOutboundPacketStream.cpp">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPrintReceivedElements.cpp">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.cpp">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.cpp">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscArg.h">
-      <Filter>Blocks\OSC\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.h">
-      <Filter>Blocks\OSC\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscListener.h">
-      <Filter>Blocks\OSC\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscMessage.h">
-      <Filter>Blocks\OSC\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscSender.h">
-      <Filter>Blocks\OSC\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\IpEndpointName.h">
-      <Filter>Blocks\OSC\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\NetworkingUtils.h">
-      <Filter>Blocks\OSC\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\PacketListener.h">
-      <Filter>Blocks\OSC\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\TimerListener.h">
-      <Filter>Blocks\OSC\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\UdpSocket.h">
-      <Filter>Blocks\OSC\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\MessageMappingOscPacketListener.h">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscException.h">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscHostEndianness.h">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscOutboundPacketStream.h">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPacketListener.h">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPrintReceivedElements.h">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.h">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.h">
-      <Filter>Blocks\OSC\src\osc</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\NetworkingUtils.cpp">
-      <Filter>Blocks\OSC\src\ip\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\UdpSocket.cpp">
-      <Filter>Blocks\OSC\src\ip\win32</Filter>
-    </ClCompile>
     <ClInclude Include="..\..\..\Cinder\blocks\UnionJack\include\UnionJack.h">
       <Filter>Blocks\UnionJack\include</Filter>
     </ClInclude>
     <ClCompile Include="..\..\..\Cinder\blocks\UnionJack\src\UnionJack.cpp">
       <Filter>Blocks\UnionJack\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\Osc.cpp">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\LiveParam.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDAnimation.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDAudio.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDFbo.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDHapMovie.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDImageSequence.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDSession.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDShaders.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDTextures.cpp">
+      <Filter>Blocks\Videodromm\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +277,39 @@
     </ClInclude>
     <ClInclude Include="..\include\HapPlayerApp.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\Osc.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\LiveParam.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDAnimation.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDAudio.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDFbo.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDHapMovie.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDImageSequence.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDSession.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDShaders.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDTextures.h">
+      <Filter>Blocks\Videodromm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\Watchdog.h">
+      <Filter>Blocks\Videodromm\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

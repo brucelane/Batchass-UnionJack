@@ -16,6 +16,8 @@
 #include "VDSettings.h"
 // Utils
 #include "VDUtils.h"
+// Animation
+#include "VDAnimation.h"
 // Message router
 #include "VDRouter.h"
 // UnionJack
@@ -68,6 +70,8 @@ private:
 	VDSettingsRef				mVDSettings;
 	// Utils
 	VDUtilsRef					mVDUtils;
+	// Animation
+	VDAnimationRef				mVDAnimation;
 	// Message router
 	VDRouterRef					mVDRouter;
 	// UnionJack

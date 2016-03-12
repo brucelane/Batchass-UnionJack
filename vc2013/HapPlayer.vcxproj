@@ -41,10 +41,10 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\..\..\..\tmp\$(TargetName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\..\..\tmp\$(TargetName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -64,7 +64,7 @@
       <AdditionalIncludeDirectories>"..\..\..\Cinder\include";..\include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>cinder-$(PlatformToolset)_d.lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib</AdditionalDependencies>
+      <AdditionalDependencies>cinder-$(PlatformToolset)_d.lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib;winmm.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"..\..\..\Cinder\lib\msw\$(PlatformTarget)";..\..\..\Cinder\blocks\Cinder-Videodromm\lib;..\..\..\Cinder\blocks\Cinder-WebSocketPP\lib\msw</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -95,7 +95,7 @@
       <AdditionalIncludeDirectories>"..\..\..\Cinder\include";..\include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>cinder-$(PlatformToolset).lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib;..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib</AdditionalDependencies>
+      <AdditionalDependencies>cinder-$(PlatformToolset).lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib;..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib;winmm.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"..\..\..\Cinder\lib\msw\$(PlatformTarget)";..\..\..\Cinder\blocks\Cinder-Videodromm\lib;..\..\..\Cinder\blocks\Cinder-WebSocketPP\lib\msw</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
@@ -124,6 +124,17 @@
     <Xml Include="Release\VDSettings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\LiveParam.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDAnimation.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDAudio.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDFbo.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDHapMovie.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDImageSequence.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDSession.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDShaders.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDTextures.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\Watchdog.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\Osc.h" />
     <ClInclude Include="..\include\HapPlayerApp.h" />
     <ClInclude Include="..\include\Resources.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.h" />
@@ -147,27 +158,19 @@
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketClient.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketConnection.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketServer.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscArg.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscListener.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscMessage.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscSender.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\IpEndpointName.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\NetworkingUtils.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\PacketListener.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\TimerListener.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\UdpSocket.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\MessageMappingOscPacketListener.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscException.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscHostEndianness.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscOutboundPacketStream.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPacketListener.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPrintReceivedElements.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.h" />
-    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\UnionJack\include\UnionJack.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\LiveParam.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDAnimation.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDAudio.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDFbo.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDHapMovie.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDImageSequence.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDSession.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDShaders.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDTextures.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\Osc.cpp" />
     <ClCompile Include="..\src\HapPlayerApp.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.c" />
@@ -190,17 +193,6 @@
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketClient.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketConnection.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketServer.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscListener.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscMessage.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscSender.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\IpEndpointName.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscOutboundPacketStream.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPrintReceivedElements.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\NetworkingUtils.cpp" />
-    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\UdpSocket.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\UnionJack\src\UnionJack.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

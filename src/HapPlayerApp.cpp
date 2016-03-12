@@ -23,8 +23,10 @@ void HapPlayerApp::setup()
 	mVDSettings->mRenderThumbs = false;
 	// utils
 	mVDUtils = VDUtils::create(mVDSettings);
+	// Animation
+	mVDAnimation = VDAnimation::create(mVDSettings);
 	// Message router
-	mVDRouter = VDRouter::create(mVDSettings);
+	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation);
 
 
 	updateWindowTitle();
