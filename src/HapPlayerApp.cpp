@@ -23,10 +23,12 @@ void HapPlayerApp::setup()
 	mVDSettings->mRenderThumbs = false;
 	// utils
 	mVDUtils = VDUtils::create(mVDSettings);
+	// Session
+	mVDSession = VDSession::create(mVDSettings);
 	// Animation
-	mVDAnimation = VDAnimation::create(mVDSettings);
+	mVDAnimation = VDAnimation::create(mVDSettings, mVDSession);
 	// Message router
-	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation);
+	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 
 
 	updateWindowTitle();
@@ -116,7 +118,7 @@ void HapPlayerApp::setup()
 	spoutTexture = gl::Texture::create(g_Width, g_Height);*/
 	// load image
 	try {
-		mImage = gl::Texture::create(loadImage(loadAsset("2.jpg")),
+		mImage = gl::Texture::create(loadImage(loadAsset("mandala1.png")),
 			gl::Texture2d::Format().loadTopDown().mipmap(true).minFilter(GL_LINEAR_MIPMAP_LINEAR));
 
 		mSrcArea = mImage->getBounds();

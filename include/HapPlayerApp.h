@@ -16,6 +16,8 @@
 #include "VDSettings.h"
 // Utils
 #include "VDUtils.h"
+// Session
+#include "VDSession.h"
 // Animation
 #include "VDAnimation.h"
 // Message router
@@ -70,6 +72,8 @@ private:
 	VDSettingsRef				mVDSettings;
 	// Utils
 	VDUtilsRef					mVDUtils;
+	// Session
+	VDSessionRef				mVDSession;
 	// Animation
 	VDAnimationRef				mVDAnimation;
 	// Message router
