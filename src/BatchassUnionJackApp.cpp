@@ -1,4 +1,5 @@
-#include "HapPlayerApp.h"
+
+#include "BatchassUnionJackApp.h"
 /*
 tempo 142
 bpm = (60 * fps) / fpb
@@ -11,12 +12,11 @@ fpb = 4, bpm = 142
 fps = 142 / 60 * 4 = 9.46
 */
 
-void HapPlayerApp::prepare(Settings *settings)
+void BatchassUnionJackApp::prepare(Settings *settings)
 {
 	settings->setWindowSize(1440, 900);
 }
-
-void HapPlayerApp::setup()
+void BatchassUnionJackApp::setup()
 {
 	mVDSettings = VDSettings::create();
 	mVDSettings->mLiveCode = false;
@@ -28,7 +28,7 @@ void HapPlayerApp::setup()
 	// Animation
 	mVDAnimation = VDAnimation::create(mVDSettings, mVDSession);
 	// Message router
-	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
+	//mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 
 
 	updateWindowTitle();
@@ -36,9 +36,6 @@ void HapPlayerApp::setup()
 	bpm = 142.0f;
 	float fps = bpm / 60.0f * fpb;
 	setFrameRate(fps);
-
-	mLoopVideo = false;
-
 
 	int w = mVDUtils->getWindowsResolution();
 	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
@@ -110,12 +107,12 @@ void HapPlayerApp::setup()
 		console() << "Unable to load shader" << std::endl;
 	}
 	mShowHud = true;
-	/*g_Width = FBO_WIDTH;
+	g_Width = FBO_WIDTH;
 	g_Height = FBO_HEIGHT;
 	if (!bInitialized) {
 		strcpy_s(SenderName, "Batchass UnionJack Spout Sender"); // we have to set a sender name first
 	}
-	spoutTexture = gl::Texture::create(g_Width, g_Height);*/
+	spoutTexture = gl::Texture::create(g_Width, g_Height);
 	// load image
 	try {
 		mImage = gl::Texture::create(loadImage(loadAsset("mandala1.png")),
@@ -131,7 +128,7 @@ void HapPlayerApp::setup()
 	}
 	buildMeshes();
 }
-void HapPlayerApp::buildMeshes()
+void BatchassUnionJackApp::buildMeshes()
 {
 	vector<vec3> lineCoords;
 	vector<vec3> maskCoords;
@@ -164,21 +161,11 @@ void HapPlayerApp::buildMeshes()
 	maskMesh->bufferAttrib(geom::Attrib::POSITION, maskCoords);
 	mMaskBatch = gl::Batch::create(maskMesh, mShader);
 }
-void HapPlayerApp::cleanup()
-{
-	// save warp settings
-	Warp::writeSettings(mWarps, writeFile(mSettings));
-	//spoutsender.ReleaseSender();
-}
-void HapPlayerApp::fileDrop(FileDropEvent event)
-{
-	loadMovieFile(event.getFile(0));
-}
-void HapPlayerApp::update()
+void BatchassUnionJackApp::update()
 {
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
-	mVDRouter->update();
+	//mVDRouter->update();
 	updateWindowTitle();
 	//float scale = math<float>::clamp(mShip.mPos.z, 0.2, 1.0);
 	float scale = 1.0f;
@@ -191,12 +178,12 @@ void HapPlayerApp::update()
 	mCamera.setPerspective(40.0f, 1.0f, 0.5f, 3.0f);
 	//mCamera.lookAt(vec3(0.0f, 1.5f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
 	mCamera.lookAt(vec3(0.0f, 2.0f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
-	if (mVDSettings->iBeat == 303) loadMovieFile(getAssetPath("") / "pupilles1024.hap.mov");
+	//if (mVDSettings->iBeat == 303) loadMovieFile(getAssetPath("") / "pupilles1024.hap.mov");
 	// render into our FBO
 	renderSceneToFbo();
 }
 // Render the scene into the FBO
-void HapPlayerApp::renderSceneToFbo()
+void BatchassUnionJackApp::renderSceneToFbo()
 {
 	// this will restore the old framebuffer binding when we leave this function
 	// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
@@ -258,48 +245,51 @@ void HapPlayerApp::renderSceneToFbo()
 		gl::color(Color::white());
 	}
 	else {
-		if (mMovie) {
-			if (mMovie->isPlaying()) mMovie->draw();
+
+		gl::ScopedMatrices matrixScope;
+		gl::setMatrices(mCamera);
+
+		gl::ScopedDepth depthScope(true);
+
+		mShader->uniform("textureMatrix", mTextureMatrix);
+
+		// Center the model
+		gl::translate(-0.5, 0.0, -0.5);
+
+		unsigned int indiciesInLine = mPoints;
+		unsigned int indiciesInMask = mPoints * 2;
+		// Draw front to back to take advantage of the depth buffer.
+		for (int i = mLines - 1; i >= 0; --i) {
+			gl::color(mBlack);
+			// Draw masks with alternating colors for debugging
+			// gl::color( Color::gray( i % 2 == 1 ? 0.5 : 0.25) );
+			mMaskBatch->draw(i * indiciesInMask, indiciesInMask);
+
+			gl::color(mBlue);
+			mLineBatch->draw(i * indiciesInLine, indiciesInLine);
 		}
-		else {
 
-			gl::ScopedMatrices matrixScope;
-			gl::setMatrices(mCamera);
-
-			gl::ScopedDepth depthScope(true);
-
-			mShader->uniform("textureMatrix", mTextureMatrix);
-
-			// Center the model
-			gl::translate(-0.5, 0.0, -0.5);
-
-			unsigned int indiciesInLine = mPoints;
-			unsigned int indiciesInMask = mPoints * 2;
-			// Draw front to back to take advantage of the depth buffer.
-			for (int i = mLines - 1; i >= 0; --i) {
-				gl::color(mBlack);
-				// Draw masks with alternating colors for debugging
-				// gl::color( Color::gray( i % 2 == 1 ? 0.5 : 0.25) );
-				mMaskBatch->draw(i * indiciesInMask, indiciesInMask);
-
-				gl::color(mBlue);
-				mLineBatch->draw(i * indiciesInLine, indiciesInLine);
-			}
-		}
 	}
 
 }
-void HapPlayerApp::shift_left(std::size_t offset, std::size_t X)
+void BatchassUnionJackApp::shift_left(std::size_t offset, std::size_t X)
 {
 	std::rotate(std::next(str.begin(), offset),
 		std::next(str.begin(), offset + X),
 		str.end());
 	str = str.substr(0, str.size() - X);
 }
-void HapPlayerApp::draw()
+void BatchassUnionJackApp::cleanup()
 {
-	// clear the window and set the drawing color to white
-	gl::clear();
+	// save warp settings
+	Warp::writeSettings(mWarps, writeFile(mSettings));
+	spoutsender.ReleaseSender();
+	quit();
+}
+
+void BatchassUnionJackApp::draw()
+{
+	gl::clear(Color::black());
 	gl::color(Color::white());
 	int i = 0;
 	// iterate over the warps and draw their content
@@ -312,7 +302,7 @@ void HapPlayerApp::draw()
 		}
 		i++;
 	}
-	/*if (bInitialized)
+	if (bInitialized)
 	{
 		spoutsender.SendTexture(mFbo->getColorTexture()->getId(), mFbo->getColorTexture()->getTarget(), g_Width, g_Height);
 		// Grab the screen (current read buffer) into the local spout texture
@@ -324,16 +314,15 @@ void HapPlayerApp::draw()
 		// NOTE : if SendTexture is called with a framebuffer object bound, that binding will be lost
 		// and has to be restored afterwards because Spout uses an fbo for intermediate rendering
 		//spoutsender.SendTexture(spoutTexture->getId(), spoutTexture->getTarget(), g_Width, g_Height);
-	}*/
+	}
 }
-
-void HapPlayerApp::resize()
+void BatchassUnionJackApp::resize()
 {
 	// tell the warps our window has been resized, so they properly scale up or down
 	Warp::handleResize(mWarps);
 }
 
-void HapPlayerApp::mouseMove(MouseEvent event)
+void BatchassUnionJackApp::mouseMove(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
 	if (!Warp::handleMouseMove(mWarps, event)) {
@@ -341,7 +330,7 @@ void HapPlayerApp::mouseMove(MouseEvent event)
 	}
 }
 
-void HapPlayerApp::mouseDown(MouseEvent event)
+void BatchassUnionJackApp::mouseDown(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
 	if (!Warp::handleMouseDown(mWarps, event)) {
@@ -349,7 +338,7 @@ void HapPlayerApp::mouseDown(MouseEvent event)
 	}
 }
 
-void HapPlayerApp::mouseDrag(MouseEvent event)
+void BatchassUnionJackApp::mouseDrag(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
 	if (!Warp::handleMouseDrag(mWarps, event)) {
@@ -357,7 +346,7 @@ void HapPlayerApp::mouseDrag(MouseEvent event)
 	}
 }
 
-void HapPlayerApp::mouseUp(MouseEvent event)
+void BatchassUnionJackApp::mouseUp(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
 	if (!Warp::handleMouseUp(mWarps, event)) {
@@ -365,9 +354,9 @@ void HapPlayerApp::mouseUp(MouseEvent event)
 	}
 }
 
-void HapPlayerApp::keyDown(KeyEvent event)
+void BatchassUnionJackApp::keyDown(KeyEvent event)
 {
-	fs::path moviePath;
+
 	// pass this key event to the warp editor first
 	if (!Warp::handleKeyDown(mWarps, event)) {
 		// warp editor did not handle the key, so handle it here
@@ -384,74 +373,23 @@ void HapPlayerApp::keyDown(KeyEvent event)
 			// toggle warp edit mode
 			Warp::enableEditMode(!Warp::isEditModeEnabled());
 			break;
-		case ci::app::KeyEvent::KEY_o:
-			moviePath = getOpenFilePath();
-			if (!moviePath.empty())
-				loadMovieFile(moviePath);
-			break;
-		case ci::app::KeyEvent::KEY_r:
-			mMovie.reset();
-			break;
-		case ci::app::KeyEvent::KEY_p:
-			if (mMovie) mMovie->play();
-			break;
-		case ci::app::KeyEvent::KEY_s:
-			if (mMovie) mMovie->stop();
-			break;
-		case ci::app::KeyEvent::KEY_SPACE:
-			if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play();
-			break;
-		case ci::app::KeyEvent::KEY_l:
-			mLoopVideo = !mLoopVideo;
-			if (mMovie) mMovie->setLoop(mLoopVideo);
-			break;
-
 		}
 	}
 }
 
-void HapPlayerApp::keyUp(KeyEvent event)
+void BatchassUnionJackApp::keyUp(KeyEvent event)
 {
 	// pass this key event to the warp editor first
 	if (!Warp::handleKeyUp(mWarps, event)) {
 		// let your application perform its keyUp handling here
 	}
 }
-void HapPlayerApp::loadMovieFile(const fs::path &moviePath)
-{
-	try {
-		mMovie.reset();
-		// load up the movie, set it to loop, and begin playing
-		mMovie = qtime::MovieGlHap::create(moviePath);
-		mLoopVideo = (mMovie->getDuration() < 30.0f);
-		mMovie->setLoop(mLoopVideo);
-		mMovie->play();
-		/*g_Width = mMovie->getWidth();
-		g_Height = mMovie->getHeight();
-		if (!bInitialized) {
-			strcpy_s(SenderName, "Reymenta Hap Spout Sender"); // we have to set a sender name first
-			// Optionally test for texture share compatibility
-			// bMemoryMode informs us whether Spout initialized for texture share or memory share
-			//bMemoryMode = spoutsender.GetMemoryShareMode();
-		}
-		spoutTexture = gl::Texture::create(g_Width, g_Height);
-		setWindowSize(g_Width, g_Height);
-		// Initialize a sender
-		bInitialized = spoutsender.CreateSender(SenderName, g_Width, g_Height);*/
 
-	}
-	catch (ci::Exception &e)
-	{
-		console() << string(e.what()) << std::endl;
-		console() << "Unable to load the movie." << std::endl;
-		//mInfoTexture.reset();
-	}
-
-}
-void HapPlayerApp::updateWindowTitle()
+void BatchassUnionJackApp::updateWindowTitle()
 {
 	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) " + toString(mVDSettings->iBeat) + " HapPlayer");
 
 }
 
-CINDER_APP(HapPlayerApp, RendererGl(RendererGl::Options().msaa(8)), &HapPlayerApp::prepare)
+
+CINDER_APP(BatchassUnionJackApp, RendererGl(RendererGl::Options().msaa(8)), &BatchassUnionJackApp::prepare)

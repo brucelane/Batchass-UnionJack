@@ -1,14 +1,14 @@
-
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
+
 #include "cinder/gl/Texture.h"
 #include "cinder/ImageIo.h"
 #include "cinder/Rand.h"
 
 #include "cinder/gl/Fbo.h"
 #include "Resources.h"
-#include "MovieHap.h"
+//#include "MovieHap.h"
 
 // warping
 #include "Warp.h"
@@ -21,7 +21,7 @@
 // Animation
 #include "VDAnimation.h"
 // Message router
-#include "VDRouter.h"
+//#include "VDRouter.h"
 // UnionJack
 #include "UnionJack.h"
 // spout
@@ -33,17 +33,16 @@ using namespace ph::warping;
 using namespace std;
 using namespace VideoDromm;
 
-template <typename T> string tostr(const T& t, int p) { ostringstream os; os << std::setprecision(p) << std::fixed << t; return os.str(); }
+class BatchassUnionJackApp : public App {
 
-class HapPlayerApp : public App {
 public:
 	static void prepare(Settings *settings);
 
 	void setup() override;
-	void cleanup() override;
+
 	void update() override;
 	void draw() override;
-	void fileDrop(FileDropEvent event) override;
+	void cleanup() override;
 
 	void resize() override;
 
@@ -56,12 +55,7 @@ public:
 	void keyUp(KeyEvent event) override;
 
 	void updateWindowTitle();
-	void loadMovieFile(const fs::path &path);
-
-	//gl::TextureRef			mInfoTexture;
-	qtime::MovieGlHapRef	mMovie;
 private:
-
 	fs::path		mSettings;
 
 	gl::TextureRef	mImage;
@@ -77,7 +71,7 @@ private:
 	// Animation
 	VDAnimationRef				mVDAnimation;
 	// Message router
-	VDRouterRef					mVDRouter;
+	//VDRouterRef					mVDRouter;
 	// UnionJack
 	vector<UnionJack>			mDisplays;
 	std::string					str;
@@ -110,14 +104,13 @@ private:
 	CameraPersp					mCamera;
 	mat4						mTextureMatrix;
 	// -------- SPOUT -------------
-	/*SpoutSender					spoutsender;            // Create a Spout sender object
+	SpoutSender					spoutsender;            // Create a Spout sender object
 	bool						bInitialized;           // true if a sender initializes OK
 	bool						bMemoryMode;            // tells us if texture share compatible
 	unsigned int				g_Width, g_Height;      // size of the texture being sent out
-	char						SenderName[256];        // sender name 
+	char						SenderName[256];        // sender name
 	gl::TextureRef				spoutTexture;           // Local Cinder texture used for sharing
 	bool						bDoneOnce;				// only try to initialize once
-	int							nSenders;*/
+	int							nSenders;
 	// ----------------------------
-	bool						mLoopVideo;
 };
