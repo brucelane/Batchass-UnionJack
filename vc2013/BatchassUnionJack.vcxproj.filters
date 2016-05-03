@@ -23,16 +23,16 @@
       <UniqueIdentifier>{FE63C8B1-9096-4217-A8F6-C7515E768C22}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Midi2">
-      <UniqueIdentifier>{EB7D2ABF-F07E-45D9-8A9E-6A8BDC1503D2}</UniqueIdentifier>
+      <UniqueIdentifier>{E1980A87-9FD5-4F49-A3E0-F8859299D4C0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Midi2\include">
-      <UniqueIdentifier>{DDC63D7A-DDEB-466C-AFB3-1ABDAFCCE265}</UniqueIdentifier>
+      <UniqueIdentifier>{DBBC9342-2060-4397-AA9B-813496B1A9B4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Midi2\lib">
-      <UniqueIdentifier>{CD423B6B-DBFC-4BDD-B0EB-D4522584C854}</UniqueIdentifier>
+      <UniqueIdentifier>{851D0467-C5AF-4E03-A14E-B34EB2060F7F}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Midi2\src">
-      <UniqueIdentifier>{582AFD64-C5D6-4A31-A6F9-21D35D21580B}</UniqueIdentifier>
+      <UniqueIdentifier>{E4C8500C-179B-4280-8D3F-5E166A2BDDAA}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Videodromm">
       <UniqueIdentifier>{D5B3AD6D-0750-4101-B5C6-24A739816064}</UniqueIdentifier>
@@ -132,33 +132,6 @@
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.h">
       <Filter>Blocks\Cinder-Hap2\src</Filter>
     </ClInclude>
-    <ClInclude Include="..\blocks\Midi2\include\CinderMidi.h">
-      <Filter>Blocks\Midi2\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\blocks\Midi2\include\MidiExceptions.h">
-      <Filter>Blocks\Midi2\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\blocks\Midi2\include\MidiHub.h">
-      <Filter>Blocks\Midi2\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\blocks\Midi2\include\MidiOut.h">
-      <Filter>Blocks\Midi2\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\blocks\Midi2\lib\RtMidi.h">
-      <Filter>Blocks\Midi2\lib</Filter>
-    </ClInclude>
-    <ClCompile Include="..\blocks\Midi2\lib\RtMidi.cpp">
-      <Filter>Blocks\Midi2\lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\blocks\Midi2\src\MidiHub.cpp">
-      <Filter>Blocks\Midi2\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\blocks\Midi2\src\CinderMidi.cpp">
-      <Filter>Blocks\Midi2\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\blocks\Midi2\src\MidiOut.cpp">
-      <Filter>Blocks\Midi2\src</Filter>
-    </ClCompile>
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\LiveParam.h">
       <Filter>Blocks\Videodromm\include</Filter>
     </ClInclude>

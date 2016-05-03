@@ -8,7 +8,7 @@
 
 #include "cinder/gl/Fbo.h"
 #include "Resources.h"
-//#include "MovieHap.h"
+#include "MovieHap.h"
 
 // warping
 #include "Warp.h"
@@ -21,7 +21,7 @@
 // Animation
 #include "VDAnimation.h"
 // Message router
-//#include "VDRouter.h"
+#include "VDRouter.h"
 // UnionJack
 #include "UnionJack.h"
 // spout
@@ -54,6 +54,9 @@ public:
 	void keyDown(KeyEvent event) override;
 	void keyUp(KeyEvent event) override;
 
+	void						fileDrop(FileDropEvent event) override;
+	void						loadMovieFile(const fs::path &path);
+
 	void updateWindowTitle();
 private:
 	fs::path		mSettings;
@@ -71,7 +74,7 @@ private:
 	// Animation
 	VDAnimationRef				mVDAnimation;
 	// Message router
-	//VDRouterRef					mVDRouter;
+	VDRouterRef					mVDRouter;
 	// UnionJack
 	vector<UnionJack>			mDisplays;
 	std::string					str;
@@ -103,6 +106,9 @@ private:
 	gl::GlslProgRef				mShader;
 	CameraPersp					mCamera;
 	mat4						mTextureMatrix;
+	// hap
+	qtime::MovieGlHapRef		mMovie;
+	bool						mLoopVideo;
 	// -------- SPOUT -------------
 	SpoutSender					spoutsender;            // Create a Spout sender object
 	bool						bInitialized;           // true if a sender initializes OK
