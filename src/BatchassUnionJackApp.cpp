@@ -14,7 +14,7 @@ fps = 142 / 60 * 4 = 9.46
 
 void BatchassUnionJackApp::prepare(Settings *settings)
 {
-	settings->setWindowSize(1440, 900);
+	settings->setWindowSize(1024, 768);
 }
 void BatchassUnionJackApp::setup()
 {
@@ -33,7 +33,7 @@ void BatchassUnionJackApp::setup()
 
 	updateWindowTitle();
 	fpb = 16.0f;
-	bpm = 142.0f;
+	bpm = 1042.0f;
 	float fps = bpm / 60.0f * fpb;
 	setFrameRate(fps);
 
@@ -87,7 +87,7 @@ void BatchassUnionJackApp::setup()
 	Warp::setSize(mWarps, mFbo->getSize());
 	// lines
 	try {
-		mTexture = gl::Texture::create(loadImage(loadAsset("mandala1.png")));
+		mTexture = gl::Texture::create(loadImage(loadAsset("1.png")));
 		mTexture->bind(0);
 	}
 	catch (...) {
@@ -117,13 +117,13 @@ void BatchassUnionJackApp::setup()
 	spoutTexture = gl::Texture::create(g_Width, g_Height);
 	// load image
 	try {
-		mImage = gl::Texture::create(loadImage(loadAsset("mandala1.png")),
+		mImage = gl::Texture::create(loadImage(loadAsset("1.png")),
 			gl::Texture2d::Format().loadTopDown().mipmap(true).minFilter(GL_LINEAR_MIPMAP_LINEAR));
 
 		mSrcArea = mImage->getBounds();
 
 		// adjust the content size of the warps
-		Warp::setSize(mWarps, mImage->getSize());
+		//Warp::setSize(mWarps, mImage->getSize());
 	}
 	catch (const std::exception &e) {
 		console() << e.what() << std::endl;
@@ -173,6 +173,7 @@ void BatchassUnionJackApp::update()
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
 	mVDRouter->update();
+	mVDAnimation->update(); 
 	updateWindowTitle();
 	//float scale = math<float>::clamp(mShip.mPos.z, 0.2, 1.0);
 	float scale = 1.0f;
@@ -245,10 +246,10 @@ void BatchassUnionJackApp::renderSceneToFbo()
 		mDisplays[1]
 			.display("Beat " + toString(mVDSettings->iBeat))
 			.colors(ColorA(mVDSettings->iFps < 50 ? mRed : mBlue, 0.8), ColorA(mDarkBlue, 0.8));
-		mDisplays[0].draw();
-		/*for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
+		/*mDisplays[0].draw();*/
+		for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
 		display->draw();
-		}*/
+		}
 		gl::color(Color::white());
 	}
 	else {
@@ -403,6 +404,9 @@ void BatchassUnionJackApp::keyDown(KeyEvent event)
 		case ci::app::KeyEvent::KEY_l:
 			mLoopVideo = !mLoopVideo;
 			if (mMovie) mMovie->setLoop(mLoopVideo);
+			break;
+		case ci::app::KeyEvent::KEY_h:
+			mShowHud = !mShowHud;
 			break;
 		}
 	}

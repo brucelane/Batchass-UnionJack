@@ -93,7 +93,7 @@ private:
 	// fbo
 	void						renderSceneToFbo();
 	gl::FboRef					mFbo;
-	static const int			FBO_WIDTH = 640, FBO_HEIGHT = 480;
+	static const int			FBO_WIDTH = 1024, FBO_HEIGHT = 768;
 	// lines
 	void						buildMeshes();
 	unsigned int				mPoints = 50;
