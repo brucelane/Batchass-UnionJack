@@ -10,6 +10,28 @@ fpb = frames per beat
 
 fpb = 4, bpm = 142
 fps = 142 / 60 * 4 = 9.46
+
+warp has to be topDown:
+<?xml version="1.0" encoding="utf-8"?>
+<warpconfig version="1.0" profile="default">
+<profile name="default">
+<map id="1" display="1">
+<warp method="perspectivebilinear" width="2" height="2" brightness="1" resolution="16" linear="0" adaptive="1">
+<controlpoint x="0" y="0"/>
+<controlpoint x="0" y="1"/>
+<controlpoint x="1" y="0"/>
+<controlpoint x="1" y="1"/>
+<corner x="0" y="1"/>
+<corner x="1" y="1"/>
+<corner x="1" y="0"/>
+<corner x="0" y="0"/>
+</warp>
+</map>
+</profile>
+</warpconfig>
+
+
+
 */
 
 void BatchassUnionJackApp::prepare(Settings *settings)
@@ -30,12 +52,37 @@ void BatchassUnionJackApp::setup()
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 
+	// Textures 
+	mTexturesFilepath = getAssetPath("") / mVDSettings->mAssetsPath / "textures.xml";
+	if (fs::exists(mTexturesFilepath)) {
+		// load textures from file if one exists
+		mTexs = VDTexture::readSettings(loadFile(mTexturesFilepath));
+	}
+	else {
+		// otherwise create a texture from scratch
+		mTexs.push_back(TextureAudio::create());
+	}
+	// bind the audio texture for
+	//mTexs[1]->getTexture()->bind(0);
 
-	updateWindowTitle();
+	// lines
+	try {
+		mTexture = gl::Texture::create(loadImage(loadAsset("1.png")));
+		mTexture->bind(0);
+	}
+	catch (...) {
+		console() << "unable to load the texture file!" << std::endl;
+	}
+	mTexture->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+
+	// TODO remove:
+		mVDSettings->iBeat = 173;
 	fpb = 16.0f;
-	bpm = 1042.0f;
+	bpm = 176.0f;// intro:176 batchass:142?
 	float fps = bpm / 60.0f * fpb;
 	setFrameRate(fps);
+
+	updateWindowTitle();
 
 	mLoopVideo = true;
 
@@ -58,7 +105,7 @@ void BatchassUnionJackApp::setup()
 	}
 	mDisplays = {
 		// Let's print out the full ASCII table as a font specimen
-		UnionJack(strSize).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(50, 280)).scale(7).colors(light, dark),
+		UnionJack(strSize).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(500, 280)).scale(7).colors(light, dark),
 		UnionJack(strSize).display("FPS").position(padding).scale(8).colors(Color8u::hex(0xf00000), Color8u::hex(0x530000))
 	};
 	// Position the displays relative to each other.
@@ -71,7 +118,7 @@ void BatchassUnionJackApp::setup()
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
 	// initialize warps
-	mSettings = getAssetPath("") / "warps.xml";
+	mSettings = getAssetPath("") / mVDSettings->mAssetsPath / "warps.xml";
 	if (fs::exists(mSettings)) {
 		// load warp settings from file if one exists
 		mWarps = Warp::readSettings(loadFile(mSettings));
@@ -79,22 +126,11 @@ void BatchassUnionJackApp::setup()
 	else {
 		// otherwise create a warp from scratch
 		mWarps.push_back(WarpPerspectiveBilinear::create());
-		mWarps.push_back(WarpPerspectiveBilinear::create());
-		mWarps.push_back(WarpPerspectiveBilinear::create());
 	}
 
 	mSrcArea = Area(0, 0, FBO_WIDTH, FBO_HEIGHT);
 	Warp::setSize(mWarps, mFbo->getSize());
 	// lines
-	try {
-		mTexture = gl::Texture::create(loadImage(loadAsset("1.png")));
-		mTexture->bind(0);
-	}
-	catch (...) {
-		console() << "unable to load the texture file!" << std::endl;
-	}
-	mTexture->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
-
 	try {
 		mShader = ci::gl::GlslProg::create(
 			ci::app::loadAsset("vert.glsl"),
@@ -112,22 +148,10 @@ void BatchassUnionJackApp::setup()
 	g_Width = FBO_WIDTH;
 	g_Height = FBO_HEIGHT;
 	if (!bInitialized) {
-		strcpy_s(SenderName, "Batchass UnionJack Spout Sender"); // we have to set a sender name first
+		strcpy_s(SenderName, "UnionJack Sender"); // we have to set a sender name first
 	}
 	spoutTexture = gl::Texture::create(g_Width, g_Height);
-	// load image
-	try {
-		mImage = gl::Texture::create(loadImage(loadAsset("1.png")),
-			gl::Texture2d::Format().loadTopDown().mipmap(true).minFilter(GL_LINEAR_MIPMAP_LINEAR));
 
-		mSrcArea = mImage->getBounds();
-
-		// adjust the content size of the warps
-		//Warp::setSize(mWarps, mImage->getSize());
-	}
-	catch (const std::exception &e) {
-		console() << e.what() << std::endl;
-	}
 	buildMeshes();
 }
 
@@ -170,6 +194,8 @@ void BatchassUnionJackApp::fileDrop(FileDropEvent event)
 }
 void BatchassUnionJackApp::update()
 {
+	// get audio spectrum
+	mTexs[0]->getTexture();
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
 	mVDRouter->update();
@@ -243,13 +269,13 @@ void BatchassUnionJackApp::renderSceneToFbo()
 		if (mVDSettings->iBeat > 63) mHorizontalAnimation = true;
 		if (mVDSettings->iBeat > 176) mShowHud = false;
 		mDisplays[0].display(str);
-		mDisplays[1]
+		mDisplays[0].draw();
+		/*mDisplays[1]
 			.display("Beat " + toString(mVDSettings->iBeat))
 			.colors(ColorA(mVDSettings->iFps < 50 ? mRed : mBlue, 0.8), ColorA(mDarkBlue, 0.8));
-		/*mDisplays[0].draw();*/
 		for (auto display = mDisplays.begin(); display != mDisplays.end(); ++display) {
 		display->draw();
-		}
+		}*/
 		gl::color(Color::white());
 	}
 	else {
@@ -294,6 +320,9 @@ void BatchassUnionJackApp::cleanup()
 {
 	// save warp settings
 	Warp::writeSettings(mWarps, writeFile(mSettings));
+	// save textures
+	VDTexture::writeSettings(mTexs, writeFile(mTexturesFilepath));
+
 	spoutsender.ReleaseSender();
 	quit();
 }
@@ -302,29 +331,17 @@ void BatchassUnionJackApp::draw()
 {
 	gl::clear(Color::black());
 	gl::color(Color::white());
-	int i = 0;
+	//int i = 0;
 	// iterate over the warps and draw their content
 	for (auto &warp : mWarps) {
-		if (i == 0) {
+		warp->draw(mFbo->getColorTexture(), mSrcArea);
+		/*
 			warp->draw(mFbo->getColorTexture(), mFbo->getBounds());
-		}
-		else {
-			warp->draw(mImage, mSrcArea);
-		}
-		i++;
+		*/
 	}
 	if (bInitialized)
 	{
 		spoutsender.SendTexture(mFbo->getColorTexture()->getId(), mFbo->getColorTexture()->getTarget(), g_Width, g_Height);
-		// Grab the screen (current read buffer) into the local spout texture
-		//spoutTexture->bind();
-		//glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, g_Width, g_Height);
-		//spoutTexture->unbind();
-
-		// Send the texture for all receivers to use
-		// NOTE : if SendTexture is called with a framebuffer object bound, that binding will be lost
-		// and has to be restored afterwards because Spout uses an fbo for intermediate rendering
-		//spoutsender.SendTexture(spoutTexture->getId(), spoutTexture->getTarget(), g_Width, g_Height);
 	}
 }
 void BatchassUnionJackApp::resize()
@@ -428,33 +445,18 @@ void BatchassUnionJackApp::loadMovieFile(const fs::path &moviePath)
 		mLoopVideo = (mMovie->getDuration() < 30.0f);
 		mMovie->setLoop(mLoopVideo);
 		mMovie->play();
-		/*g_Width = mMovie->getWidth();
-		g_Height = mMovie->getHeight();
-		if (!bInitialized) {
-		strcpy_s(SenderName, "Reymenta Hap Spout Sender"); // we have to set a sender name first
-		// Optionally test for texture share compatibility
-		// bMemoryMode informs us whether Spout initialized for texture share or memory share
-		//bMemoryMode = spoutsender.GetMemoryShareMode();
-		}
-		spoutTexture = gl::Texture::create(g_Width, g_Height);
-		setWindowSize(g_Width, g_Height);
-		// Initialize a sender
-		bInitialized = spoutsender.CreateSender(SenderName, g_Width, g_Height);*/
 
 	}
 	catch (ci::Exception &e)
 	{
 		console() << string(e.what()) << std::endl;
 		console() << "Unable to load the movie." << std::endl;
-		//mInfoTexture.reset();
 	}
 
 }
 void BatchassUnionJackApp::updateWindowTitle()
 {
-	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) " + toString(mVDSettings->iBeat) + " HapPlayer");
-
+	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) " + toString(mVDSettings->iBeat) + " UnionJack");
 }
-
 
 CINDER_APP(BatchassUnionJackApp, RendererGl(RendererGl::Options().msaa(8)), &BatchassUnionJackApp::prepare)

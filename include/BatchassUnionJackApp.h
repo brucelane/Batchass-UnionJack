@@ -20,6 +20,8 @@
 #include "VDSession.h"
 // Animation
 #include "VDAnimation.h"
+// Textures
+#include "VDTexture.h"
 // Message router
 #include "VDRouter.h"
 // UnionJack
@@ -61,7 +63,6 @@ public:
 private:
 	fs::path		mSettings;
 
-	gl::TextureRef	mImage;
 	WarpList		mWarps;
 
 	Area			mSrcArea;
@@ -75,6 +76,10 @@ private:
 	VDAnimationRef				mVDAnimation;
 	// Message router
 	VDRouterRef					mVDRouter;
+	// Textures
+	VDTextureList				mTexs;
+	fs::path					mTexturesFilepath;
+
 	// UnionJack
 	vector<UnionJack>			mDisplays;
 	std::string					str;
@@ -82,11 +87,12 @@ private:
 	int							strSize;
 	void						shift_left(std::size_t offset, std::size_t X);
 	Color						mBlack = Color::black();
-	Color						mBlue = Color8u(66, 161, 235);
+	Color						mBlue = Color8u(66, 0, 235);
 	Color						mDarkBlue = Color8u::hex(0x1A3E5A);
 	Color						mRed = Color8u(240, 0, 0);
 	bool						mHorizontalAnimation;
 	map<int, bool>				mIndexes;
+	gl::TextureRef				mTexture;
 	// track 
 	float						bpm;
 	float						fpb;
@@ -102,7 +108,6 @@ private:
 	gl::BatchRef				mLineBatch;
 	gl::BatchRef				mMaskBatch;
 
-	gl::TextureRef				mTexture;
 	gl::GlslProgRef				mShader;
 	CameraPersp					mCamera;
 	mat4						mTextureMatrix;
