@@ -76,7 +76,7 @@ void BatchassUnionJackApp::setup()
 	mTexture->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
 
 	// TODO remove:
-		mVDSettings->iBeat = 173;
+		//mVDSettings->iBeat = 173;
 	fpb = 16.0f;
 	bpm = 176.0f;// intro:176 batchass:142?
 	float fps = bpm / 60.0f * fpb;
