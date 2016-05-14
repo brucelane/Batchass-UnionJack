@@ -36,7 +36,7 @@ warp has to be topDown:
 
 void BatchassUnionJackApp::prepare(Settings *settings)
 {
-	settings->setWindowSize(1024, 768);
+	settings->setWindowSize(640, 480);
 }
 void BatchassUnionJackApp::setup()
 {
@@ -86,9 +86,10 @@ void BatchassUnionJackApp::setup()
 
 	mLoopVideo = true;
 
-	int w = mVDUtils->getWindowsResolution();
-	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
-	setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
+	//int w = mVDUtils->getWindowsResolution();
+	//setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
+	//setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
+	setWindowPos(ivec2(140));
 	// UnionJack
 	Color light = Color8u::hex(0x42a1eb);
 	Color dark = Color8u::hex(0x082f4d);
@@ -105,7 +106,7 @@ void BatchassUnionJackApp::setup()
 	}
 	mDisplays = {
 		// Let's print out the full ASCII table as a font specimen
-		UnionJack(strSize).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(500, 280)).scale(7).colors(light, dark),
+		UnionJack(strSize).display(" !\"#$%&'()*+,-./0123456789:;<=>?").position(vec2(60, 200)).scale(4).colors(light, dark),
 		UnionJack(strSize).display("FPS").position(padding).scale(8).colors(Color8u::hex(0xf00000), Color8u::hex(0x530000))
 	};
 	// Position the displays relative to each other.
@@ -147,10 +148,12 @@ void BatchassUnionJackApp::setup()
 	mShowHud = true;
 	g_Width = FBO_WIDTH;
 	g_Height = FBO_HEIGHT;
-	if (!bInitialized) {
-		strcpy_s(SenderName, "UnionJack Sender"); // we have to set a sender name first
-	}
+	//spout
+	strcpy_s(SenderName, "UnionJack Sender"); // we have to set a sender name first
+	bInitialized = false;
 	spoutTexture = gl::Texture::create(g_Width, g_Height);
+	// Initialize a sender
+	bInitialized = spoutsender.CreateSender(SenderName, g_Width, g_Height);
 
 	buildMeshes();
 }
@@ -203,8 +206,10 @@ void BatchassUnionJackApp::update()
 	updateWindowTitle();
 	//float scale = math<float>::clamp(mShip.mPos.z, 0.2, 1.0);
 	float scale = 1.0f;
+	scale += (mTexs[0]->getIntensity()/255.0f);
 	mTextureMatrix = glm::translate(vec3(0.5, 0.5, 0));
-	mTextureMatrix = glm::rotate(mTextureMatrix, mVDSettings->liveMeter, vec3(0, 0, 1));
+	//mTextureMatrix = glm::rotate(mTextureMatrix, mVDSettings->liveMeter, vec3(0, 0, 1));
+	mTextureMatrix = glm::rotate(mTextureMatrix, (mTexs[0]->getIntensity() / 255.0f), vec3(0, 0, 1));
 	mTextureMatrix = glm::scale(mTextureMatrix, vec3(scale, scale, 0.25));
 	//mTextureMatrix = glm::translate(mTextureMatrix, vec3(mVDSettings->liveMeter, mVDSettings->iBeat, 0));
 	mTextureMatrix = glm::translate(mTextureMatrix, vec3(-0.5, -0.5, 0));
@@ -212,7 +217,7 @@ void BatchassUnionJackApp::update()
 	mCamera.setPerspective(40.0f, 1.0f, 0.5f, 3.0f);
 	//mCamera.lookAt(vec3(0.0f, 1.5f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
 	mCamera.lookAt(vec3(0.0f, 2.0f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
-	if (mVDSettings->iBeat == 303) loadMovieFile(getAssetPath("") / "pupilles640x480.hap.mov");
+	//if (mVDSettings->iBeat == 303) loadMovieFile(getAssetPath("") / "pupilles640x480.hap.mov");
 	// render into our FBO
 	renderSceneToFbo();
 }
@@ -224,7 +229,7 @@ void BatchassUnionJackApp::renderSceneToFbo()
 	// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
 	gl::ScopedFramebuffer fbScp(mFbo);
 	// clear out the FBO with white or black
-	switch (mVDSettings->iBeat)
+	/*switch (mVDSettings->iBeat)
 	{
 	case 80:
 	case 95:
@@ -242,8 +247,8 @@ void BatchassUnionJackApp::renderSceneToFbo()
 	default:
 		gl::clear(mBlack, true);
 		break;
-	}
-
+	}*/
+	gl::clear(Color(mVDSettings->controlValues[48], mVDSettings->controlValues[48], mVDSettings->controlValues[48]), true);
 	// setup the viewport to match the dimensions of the FBO
 	gl::ScopedViewport scpVp(ivec2(0), mFbo->getSize());
 
@@ -265,9 +270,9 @@ void BatchassUnionJackApp::renderSceneToFbo()
 			}
 		}
 
-		if (mVDSettings->iBeat > 0 && mVDSettings->iBeat / 8 < strSize) mIndexes[mVDSettings->iBeat / 8] = false;
+		/*if (mVDSettings->iBeat > 0 && mVDSettings->iBeat / 8 < strSize) mIndexes[mVDSettings->iBeat / 8] = false;
 		if (mVDSettings->iBeat > 63) mHorizontalAnimation = true;
-		if (mVDSettings->iBeat > 176) mShowHud = false;
+		if (mVDSettings->iBeat > 176) mShowHud = false;*/
 		mDisplays[0].display(str);
 		mDisplays[0].draw();
 		/*mDisplays[1]
@@ -288,6 +293,7 @@ void BatchassUnionJackApp::renderSceneToFbo()
 
 			gl::ScopedDepth depthScope(true);
 
+			mTexture->bind(0);
 			mShader->uniform("textureMatrix", mTextureMatrix);
 
 			// Center the model
@@ -388,43 +394,75 @@ void BatchassUnionJackApp::keyDown(KeyEvent event)
 	// pass this key event to the warp editor first
 	if (!Warp::handleKeyDown(mWarps, event)) {
 		// warp editor did not handle the key, so handle it here
-		switch (event.getCode()) {
-		case KeyEvent::KEY_ESCAPE:
-			// quit the application
-			quit();
-			break;
-		case KeyEvent::KEY_v:
-			// toggle vertical sync
-			gl::enableVerticalSync(!gl::isVerticalSyncEnabled());
-			break;
-		case KeyEvent::KEY_w:
-			// toggle warp edit mode
-			Warp::enableEditMode(!Warp::isEditModeEnabled());
-			break;
-		case ci::app::KeyEvent::KEY_o:
-			moviePath = getOpenFilePath();
-			if (!moviePath.empty())
-				loadMovieFile(moviePath);
-			break;
-		case ci::app::KeyEvent::KEY_r:
-			mMovie.reset();
-			break;
-		case ci::app::KeyEvent::KEY_p:
-			if (mMovie) mMovie->play();
-			break;
-		case ci::app::KeyEvent::KEY_s:
-			if (mMovie) mMovie->stop();
-			break;
-		case ci::app::KeyEvent::KEY_SPACE:
-			if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play();
-			break;
-		case ci::app::KeyEvent::KEY_l:
-			mLoopVideo = !mLoopVideo;
-			if (mMovie) mMovie->setLoop(mLoopVideo);
-			break;
-		case ci::app::KeyEvent::KEY_h:
-			mShowHud = !mShowHud;
-			break;
+		if (!mVDAnimation->handleKeyDown(event)) {
+			// Animation did not handle the key, so handle it here
+			switch (event.getCode()) {
+			case KeyEvent::KEY_ESCAPE:
+				// quit the application
+				quit();
+				break;
+			case KeyEvent::KEY_w:
+				// toggle warp edit mode
+				Warp::enableEditMode(!Warp::isEditModeEnabled());
+				break;
+			/*case ci::app::KeyEvent::KEY_o:
+				moviePath = getOpenFilePath();
+				if (!moviePath.empty())
+					loadMovieFile(moviePath);
+				break;
+			case ci::app::KeyEvent::KEY_r:
+				mMovie.reset();
+				break;
+			case ci::app::KeyEvent::KEY_p:
+				if (mMovie) mMovie->play();
+				break;
+			case ci::app::KeyEvent::KEY_s:
+				if (mMovie) mMovie->stop();
+				break;
+			case ci::app::KeyEvent::KEY_SPACE:
+				if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play();
+				break;
+			case ci::app::KeyEvent::KEY_l:
+				mLoopVideo = !mLoopVideo;
+				if (mMovie) mMovie->setLoop(mLoopVideo);
+				break;*/
+			case ci::app::KeyEvent::KEY_m:
+				loadMovieFile(getAssetPath("") / "pupilles640x480.hap.mov");
+				break;
+			case ci::app::KeyEvent::KEY_i:
+				mVDSettings->controlValues[48] = 1.0f;
+				break;
+			case ci::app::KeyEvent::KEY_h:
+				mShowHud = !mShowHud;
+				break;
+			case ci::app::KeyEvent::KEY_a:
+				mHorizontalAnimation = !mHorizontalAnimation;
+				break;
+			case ci::app::KeyEvent::KEY_1:
+				mIndexes[0] = false;
+				break;
+			case ci::app::KeyEvent::KEY_2:
+				mIndexes[1] = false;
+				break;
+			case ci::app::KeyEvent::KEY_3:
+				mIndexes[2] = false;
+				break;
+			case ci::app::KeyEvent::KEY_4:
+				mIndexes[3] = false;
+				break;
+			case ci::app::KeyEvent::KEY_5:
+				mIndexes[4] = false;
+				break;
+			case ci::app::KeyEvent::KEY_6:
+				mIndexes[5] = false;
+				break;
+			case ci::app::KeyEvent::KEY_7:
+				mIndexes[6] = false;
+				break;
+			case ci::app::KeyEvent::KEY_8:
+				mIndexes[7] = false;
+				break;
+			}
 		}
 	}
 }
@@ -434,6 +472,16 @@ void BatchassUnionJackApp::keyUp(KeyEvent event)
 	// pass this key event to the warp editor first
 	if (!Warp::handleKeyUp(mWarps, event)) {
 		// let your application perform its keyUp handling here
+		if (!mVDAnimation->handleKeyUp(event)) {
+			// Animation did not handle the key, so handle it here
+			switch (event.getCode()) {
+			
+			case ci::app::KeyEvent::KEY_i:
+				mVDSettings->controlValues[48] = 0.0f;
+				break;
+
+			}
+		}
 	}
 }
 void BatchassUnionJackApp::loadMovieFile(const fs::path &moviePath)

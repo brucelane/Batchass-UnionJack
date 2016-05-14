@@ -109,6 +109,12 @@
     <Filter Include="Blocks\UnionJack\src">
       <UniqueIdentifier>{5E49B025-20F2-47A8-891F-4366118397FC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{ec18ab7e-7c0f-4fb1-a457-4ea0a8a48a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="release">
+      <UniqueIdentifier>{41a7bd52-a048-4f08-a337-79d44c8ed1a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\BatchassUnionJackApp.cpp">
@@ -246,6 +252,18 @@
     <ClCompile Include="..\..\..\Cinder\blocks\UnionJack\src\UnionJack.cpp">
       <Filter>Blocks\UnionJack\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\lib\RtMidi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\src\MidiHub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\src\CinderMidi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-MIDI2\src\MidiOut.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
@@ -254,10 +272,33 @@
     <ClInclude Include="..\include\BatchassUnionJackApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\CinderMidi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\MidiExceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\MidiHub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\include\MidiOut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-MIDI2\lib\RtMidi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Debug\VDSettings.xml">
+      <Filter>debug</Filter>
+    </Xml>
+    <Xml Include="Release\VDSettings.xml">
+      <Filter>release</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
