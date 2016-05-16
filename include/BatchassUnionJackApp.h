@@ -87,7 +87,7 @@ private:
 	int							strSize;
 	void						shift_left(std::size_t offset, std::size_t X);
 	Color						mBlack = Color::black();
-	Color						mBlue = Color8u(66, 0, 235);
+	Color						mBlue = Color8u(99, 0, 235);
 	Color						mDarkBlue = Color8u::hex(0x1A3E5A);
 	Color						mRed = Color8u(240, 0, 0);
 	bool						mHorizontalAnimation;
@@ -124,4 +124,6 @@ private:
 	bool						bDoneOnce;				// only try to initialize once
 	int							nSenders;
 	// ----------------------------
+	// mouse
+	float						mouseX, mouseY;
 };

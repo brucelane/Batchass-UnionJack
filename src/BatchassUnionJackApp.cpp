@@ -146,6 +146,7 @@ void BatchassUnionJackApp::setup()
 		console() << "Unable to load shader" << std::endl;
 	}
 	mShowHud = true;
+	mouseX = 0.5f;
 	g_Width = FBO_WIDTH;
 	g_Height = FBO_HEIGHT;
 	//spout
@@ -206,17 +207,18 @@ void BatchassUnionJackApp::update()
 	updateWindowTitle();
 	//float scale = math<float>::clamp(mShip.mPos.z, 0.2, 1.0);
 	float scale = 1.0f;
-	scale += (mTexs[0]->getIntensity()/255.0f);
+	scale -= (mTexs[0]->getIntensity()/255.0f);
 	mTextureMatrix = glm::translate(vec3(0.5, 0.5, 0));
 	//mTextureMatrix = glm::rotate(mTextureMatrix, mVDSettings->liveMeter, vec3(0, 0, 1));
-	mTextureMatrix = glm::rotate(mTextureMatrix, (mTexs[0]->getIntensity() / 255.0f), vec3(0, 0, 1));
+	mTextureMatrix = glm::rotate(mTextureMatrix, (mTexs[0]->getIntensity() / 120.0f), vec3(0, 0, 1));
 	mTextureMatrix = glm::scale(mTextureMatrix, vec3(scale, scale, 0.25));
 	//mTextureMatrix = glm::translate(mTextureMatrix, vec3(mVDSettings->liveMeter, mVDSettings->iBeat, 0));
 	mTextureMatrix = glm::translate(mTextureMatrix, vec3(-0.5, -0.5, 0));
 
 	mCamera.setPerspective(40.0f, 1.0f, 0.5f, 3.0f);
-	//mCamera.lookAt(vec3(0.0f, 1.5f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
-	mCamera.lookAt(vec3(0.0f, 2.0f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
+	//mCamera.setPerspective(40.0f, 1.0f, mouseX, 3.0f);
+	mCamera.lookAt(vec3(0.0f, 1.0f+mouseX, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
+	//mCamera.lookAt(vec3(0.0f, 2.0f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
 	//if (mVDSettings->iBeat == 303) loadMovieFile(getAssetPath("") / "pupilles640x480.hap.mov");
 	// render into our FBO
 	renderSceneToFbo();
@@ -369,6 +371,8 @@ void BatchassUnionJackApp::mouseDown(MouseEvent event)
 	// pass this mouse event to the warp editor first
 	if (!Warp::handleMouseDown(mWarps, event)) {
 		// let your application perform its mouseDown handling here
+		mouseX = event.getX() / 640.0f;
+		mouseY = event.getY() / 480.0f;
 	}
 }
 
@@ -422,15 +426,15 @@ void BatchassUnionJackApp::keyDown(KeyEvent event)
 			case ci::app::KeyEvent::KEY_SPACE:
 				if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play();
 				break;
+			case ci::app::KeyEvent::KEY_i:
+				mVDSettings->controlValues[48] = 1.0f;
+				break;
 			case ci::app::KeyEvent::KEY_l:
 				mLoopVideo = !mLoopVideo;
 				if (mMovie) mMovie->setLoop(mLoopVideo);
 				break;*/
 			case ci::app::KeyEvent::KEY_m:
 				loadMovieFile(getAssetPath("") / "pupilles640x480.hap.mov");
-				break;
-			case ci::app::KeyEvent::KEY_i:
-				mVDSettings->controlValues[48] = 1.0f;
 				break;
 			case ci::app::KeyEvent::KEY_h:
 				mShowHud = !mShowHud;
@@ -474,13 +478,13 @@ void BatchassUnionJackApp::keyUp(KeyEvent event)
 		// let your application perform its keyUp handling here
 		if (!mVDAnimation->handleKeyUp(event)) {
 			// Animation did not handle the key, so handle it here
-			switch (event.getCode()) {
+			/*switch (event.getCode()) {
 			
 			case ci::app::KeyEvent::KEY_i:
 				mVDSettings->controlValues[48] = 0.0f;
 				break;
 
-			}
+			}*/
 		}
 	}
 }
