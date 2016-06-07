@@ -56,11 +56,11 @@ void BatchassUnionJackApp::setup()
 	mTexturesFilepath = getAssetPath("") / mVDSettings->mAssetsPath / "textures.xml";
 	if (fs::exists(mTexturesFilepath)) {
 		// load textures from file if one exists
-		mTexs = VDTexture::readSettings(loadFile(mTexturesFilepath));
+		mTexs = VDTexture::readSettings(mVDAnimation, loadFile(mTexturesFilepath));
 	}
 	else {
 		// otherwise create a texture from scratch
-		mTexs.push_back(TextureAudio::create());
+		mTexs.push_back(TextureAudio::create(mVDAnimation));
 	}
 	// bind the audio texture for
 	//mTexs[1]->getTexture()->bind(0);
@@ -207,10 +207,10 @@ void BatchassUnionJackApp::update()
 	updateWindowTitle();
 	//float scale = math<float>::clamp(mShip.mPos.z, 0.2, 1.0);
 	float scale = 1.0f;
-	scale -= (mTexs[0]->getIntensity()/255.0f);
+	scale -= (mVDAnimation->maxVolume / 255.0f);
 	mTextureMatrix = glm::translate(vec3(0.5, 0.5, 0));
 	//mTextureMatrix = glm::rotate(mTextureMatrix, mVDSettings->liveMeter, vec3(0, 0, 1));
-	mTextureMatrix = glm::rotate(mTextureMatrix, (mTexs[0]->getIntensity() / 120.0f), vec3(0, 0, 1));
+	mTextureMatrix = glm::rotate(mTextureMatrix, (mVDAnimation->maxVolume / 120.0f), vec3(0, 0, 1));
 	mTextureMatrix = glm::scale(mTextureMatrix, vec3(scale, scale, 0.25));
 	//mTextureMatrix = glm::translate(mTextureMatrix, vec3(mVDSettings->liveMeter, mVDSettings->iBeat, 0));
 	mTextureMatrix = glm::translate(mTextureMatrix, vec3(-0.5, -0.5, 0));
@@ -250,7 +250,7 @@ void BatchassUnionJackApp::renderSceneToFbo()
 		gl::clear(mBlack, true);
 		break;
 	}*/
-	gl::clear(Color(mVDSettings->controlValues[48], mVDSettings->controlValues[48], mVDSettings->controlValues[48]), true);
+	gl::clear(Color(mVDAnimation->controlValues[48], mVDAnimation->controlValues[48], mVDAnimation->controlValues[48]), true);
 	// setup the viewport to match the dimensions of the FBO
 	gl::ScopedViewport scpVp(ivec2(0), mFbo->getSize());
 
