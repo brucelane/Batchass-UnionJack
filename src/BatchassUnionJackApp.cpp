@@ -43,12 +43,12 @@ void BatchassUnionJackApp::setup()
 	mVDSettings = VDSettings::create();
 	mVDSettings->mLiveCode = false;
 	mVDSettings->mRenderThumbs = false;
-	// utils
-	mVDUtils = VDUtils::create(mVDSettings);
 	// Session
 	mVDSession = VDSession::create(mVDSettings);
 	// Animation
-	mVDAnimation = VDAnimation::create(mVDSettings, mVDSession);
+	/*mVDAnimation = VDAnimation::create(mVDSettings, mVDSession);
+	// utils
+	mVDUtils = VDUtils::create(mVDSettings);
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 
@@ -61,7 +61,7 @@ void BatchassUnionJackApp::setup()
 	else {
 		// otherwise create a texture from scratch
 		mTexs.push_back(TextureAudio::create(mVDAnimation));
-	}
+	}*/
 	// bind the audio texture for
 	//mTexs[1]->getTexture()->bind(0);
 
@@ -198,19 +198,21 @@ void BatchassUnionJackApp::fileDrop(FileDropEvent event)
 }
 void BatchassUnionJackApp::update()
 {
+	mVDSession->setControlValue(mVDSettings->IFPS, getAverageFps());
+	mVDSession->update();
 	// get audio spectrum
-	mTexs[0]->getTexture();
+	/*mTexs[0]->getTexture();
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
 	mVDRouter->update();
-	mVDAnimation->update(); 
+	mVDAnimation->update(); */
 	updateWindowTitle();
 	//float scale = math<float>::clamp(mShip.mPos.z, 0.2, 1.0);
 	float scale = 1.0f;
-	scale -= (mVDAnimation->maxVolume / 255.0f);
+	scale -= (mVDSession->getMaxVolume() / 255.0f);
 	mTextureMatrix = glm::translate(vec3(0.5, 0.5, 0));
 	//mTextureMatrix = glm::rotate(mTextureMatrix, mVDSettings->liveMeter, vec3(0, 0, 1));
-	mTextureMatrix = glm::rotate(mTextureMatrix, (mVDAnimation->maxVolume / 120.0f), vec3(0, 0, 1));
+	mTextureMatrix = glm::rotate(mTextureMatrix, mVDSession->getMaxVolume() / 120.0f, vec3(0, 0, 1));
 	mTextureMatrix = glm::scale(mTextureMatrix, vec3(scale, scale, 0.25));
 	//mTextureMatrix = glm::translate(mTextureMatrix, vec3(mVDSettings->liveMeter, mVDSettings->iBeat, 0));
 	mTextureMatrix = glm::translate(mTextureMatrix, vec3(-0.5, -0.5, 0));
@@ -250,7 +252,7 @@ void BatchassUnionJackApp::renderSceneToFbo()
 		gl::clear(mBlack, true);
 		break;
 	}*/
-	gl::clear(Color(mVDAnimation->controlValues[48], mVDAnimation->controlValues[48], mVDAnimation->controlValues[48]), true);
+	gl::clear(Color::black());
 	// setup the viewport to match the dimensions of the FBO
 	gl::ScopedViewport scpVp(ivec2(0), mFbo->getSize());
 
@@ -329,7 +331,7 @@ void BatchassUnionJackApp::cleanup()
 	// save warp settings
 	Warp::writeSettings(mWarps, writeFile(mSettings));
 	// save textures
-	VDTexture::writeSettings(mTexs, writeFile(mTexturesFilepath));
+	//VDTexture::writeSettings(mTexs, writeFile(mTexturesFilepath));
 
 	spoutsender.ReleaseSender();
 	quit();
@@ -398,7 +400,7 @@ void BatchassUnionJackApp::keyDown(KeyEvent event)
 	// pass this key event to the warp editor first
 	if (!Warp::handleKeyDown(mWarps, event)) {
 		// warp editor did not handle the key, so handle it here
-		if (!mVDAnimation->handleKeyDown(event)) {
+		if (!mVDSession->handleKeyDown(event)) {
 			// Animation did not handle the key, so handle it here
 			switch (event.getCode()) {
 			case KeyEvent::KEY_ESCAPE:
@@ -476,7 +478,7 @@ void BatchassUnionJackApp::keyUp(KeyEvent event)
 	// pass this key event to the warp editor first
 	if (!Warp::handleKeyUp(mWarps, event)) {
 		// let your application perform its keyUp handling here
-		if (!mVDAnimation->handleKeyUp(event)) {
+		if (!mVDSession->handleKeyUp(event)) {
 			// Animation did not handle the key, so handle it here
 			/*switch (event.getCode()) {
 			

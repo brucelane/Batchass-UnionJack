@@ -14,16 +14,16 @@
 #include "Warp.h"
 // parameters
 #include "VDSettings.h"
-// Utils
-#include "VDUtils.h"
 // Session
 #include "VDSession.h"
+// Utils
+/*#include "VDUtils.h"
 // Animation
 #include "VDAnimation.h"
 // Textures
 #include "VDTexture.h"
 // Message router
-#include "VDRouter.h"
+#include "VDRouter.h"*/
 // UnionJack
 #include "UnionJack.h"
 // spout
@@ -68,17 +68,17 @@ private:
 	Area			mSrcArea;
 	// Settings
 	VDSettingsRef				mVDSettings;
-	// Utils
-	VDUtilsRef					mVDUtils;
 	// Session
 	VDSessionRef				mVDSession;
+	// Utils
+	/*VDUtilsRef					mVDUtils;
 	// Animation
 	VDAnimationRef				mVDAnimation;
 	// Message router
 	VDRouterRef					mVDRouter;
 	// Textures
 	VDTextureList				mTexs;
-	fs::path					mTexturesFilepath;
+	fs::path					mTexturesFilepath;*/
 
 	// UnionJack
 	vector<UnionJack>			mDisplays;
