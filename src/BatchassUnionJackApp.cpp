@@ -198,7 +198,7 @@ void BatchassUnionJackApp::fileDrop(FileDropEvent event)
 }
 void BatchassUnionJackApp::update()
 {
-	mVDSession->setControlValue(mVDSettings->IFPS, getAverageFps());
+	mVDSession->setFloatUniformValueByIndex(mVDSettings->IFPS, getAverageFps());
 	mVDSession->update();
 	// get audio spectrum
 	/*mTexs[0]->getTexture();
